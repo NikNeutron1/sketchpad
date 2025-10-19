@@ -12,7 +12,6 @@ import {
 } from '@angular/core';
 import { Algebra } from '../../model/util/algebra';
 import { ColorUtils } from '../../model/util/color-utils';
-import { BlobTextureService } from '../../services/blob-texture.service';
 import { HilberColorPalette } from '../../model/art/hilbert-color-palette.service';
 import { HilbertCurveMappingService } from '../../model/art/hilbert-curve-mapping.service';
 import { IPoint2D, IBoundsSize } from '../../model/types';
@@ -50,7 +49,6 @@ export class ColorPalette1dComponent
   height: number;
 
   constructor(
-    private readonly blobTextureService: BlobTextureService,
     private readonly hilberColorPalette: HilberColorPalette,
     private readonly hilbertCurveMappingService: HilbertCurveMappingService,
   ) {

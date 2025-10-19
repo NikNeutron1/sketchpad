@@ -1,4 +1,4 @@
-import { HTMLUtils } from "./html";
+import { HTMLUtils } from './html';
 
 export class InputHandler {
   toText<T extends string>(event: Event): T {

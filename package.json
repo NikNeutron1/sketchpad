@@ -9,6 +9,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test2": "ng test --watch=false --browsers=ChromeHeadless",
     "format:fix": "prettier --write \"src/**/*.ts\""
   },
   "private": true,

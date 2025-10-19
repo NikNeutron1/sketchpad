@@ -41,6 +41,7 @@ export class MementoComponent implements OnChanges {
   isSaved(): boolean {
     return true;
   }
+
   countUndo(): number {
     return this.memento.countUndo();
   }
