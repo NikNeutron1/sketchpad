@@ -1,8 +1,6 @@
 # Sketchpad
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.16.
-
-The Project is extracted from a bigger personal project I got going on.
+The Project is extracted from a bigger personal project I got going on. It uses Angular version 16.2.16.
 
 It is meant to showcase my approach to coding with angular as well as some of the problems I care about.
 
