@@ -7,7 +7,7 @@ It is meant to showcase my approach to coding with angular as well as some of th
 Unit Tests only exist in limited form and only for the purpose of showcasing my ability to write them. The personal project doesn't contain many of them due to it not having any production pressure or collaboration with other developers.
 
 Example Unit Test Classes
-    - point-2d.spec.ts tests some functions of a utility class
+  - point-2d.spec.ts tests some functions of a utility class
 
 (TODO) add test classes for at least one service and one component to demonstrate mocking.    
 
