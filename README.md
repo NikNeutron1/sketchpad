@@ -23,5 +23,5 @@ Run `npm run test`.
 
 # BUILDING AND DEPLOYMENT
 
-There is a simple github pages deployment set up. Run `ng deploy`.
+There is a simple github pages deployment set up. Run `ng deploy` if you are me :D
 
