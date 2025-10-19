@@ -1,0 +1,7 @@
+<div (click)="open = !open" class="details-summary" [class.details-summary-open]="open">
+  <div>{{ open ? "-" : "+" }}</div>
+  <ng-content select="[summary]"></ng-content>
+</div>
+<div class="details-content" [class.details-content-hidden]="!open">
+  <ng-content select="[content]"></ng-content>
+</div>

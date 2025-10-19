@@ -1,0 +1,123 @@
+.sketch-pad {
+  // height: 100%;
+}
+
+.sketch-pad-image-info {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  font-size: 10pt;
+}
+
+.sketch-pad-canvas-exhibit {
+  --aspectRatio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  flex-direction: column;
+  position: relative;
+}
+
+.sketch-pad-canvas-exhibit > canvas {
+  // border: 1px solid blue;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: var(--aspectRatio);
+}
+
+.sketch-pad-color-pallete-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 5px;
+  overflow: hidden;
+  grid-template-rows: 100%;
+  aspect-ratio: 1;
+}
+
+@media (max-aspect-ratio: 0.8/1) {
+  .sketch-pad-canvas-exhibit {
+    // flex-direction: row;
+  }
+  .sketch-pad-canvas-exhibit > * {
+  }
+  .sketch-pad-color-scroll {
+    display: block;
+    height: 100%;
+  }
+  .sketch-pad-color-scroll > input {
+    height: 100%;
+  }
+  .sketch-pad-color2 {
+    display: none;
+  }
+  .sketch-pad-color-pallete-container {
+    grid-template-columns: 50px 1fr 50px;
+    gap: 0px;
+    overflow: hidden;
+    grid-template-rows: 100%;
+    aspect-ratio: 1 / 0.7;
+  }
+}
+
+@media (min-aspect-ratio: 0.8/1) {
+  .sketch-pad-color-scroll {
+    display: none;
+  }
+  .sketch-pad-color2 {
+    display: block;
+    width: 100%;
+  }
+}
+
+.sketch-pad-color-pallete {
+  width: 100%;
+  height: 100%;
+}
+
+.sketch-pad-color-pallete-1d {
+  height: auto;
+}
+
+.sketch-pad-settings {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  font-size: 10pt;
+}
+
+.sketch-pad-setting {
+  display: grid;
+  grid-template-columns: 25% 75%;
+  display: grid;
+  font-size: 10pt;
+}
+
+.sketch-pad-setting > *:nth-child(1),
+.sketch-pad-settings > *:nth-child(1) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-right: 5px;
+}
+
+.sketch-pad-dot-view {
+  --sketchPadColor: blue;
+  background:
+    radial-gradient(circle at top left, var(--sketchPadColor) 0%, transparent 50%),
+    radial-gradient(circle at bottom right, var(--sketchPadColor) 0%, transparent 50%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.sketch-pad-range {
+  background-color: grey;
+}
+.sketch-pad-range-vertical {
+  --range-vertical-height: 100px;
+  --range-vertical-y-offest: -50px;
+  transform-origin: left;
+  transform: rotate(-90deg) translate(var(--range-vertical-y-offest), 25px);
+  width: var(--range-vertical-height);
+}

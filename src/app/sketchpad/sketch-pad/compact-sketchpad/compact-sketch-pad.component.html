@@ -1,0 +1,51 @@
+<div class="compact-sketchpad">
+  <div class="sketch-pad-canvas-exhibit">
+    <app-draw-canvas
+      #sketchPad
+      [source]="image.source"
+      [lineWidth]="lineWidth"
+      [colorIndex]="colorIndex"
+      (onDrawLine)="mouse = $event"
+    ></app-draw-canvas>
+    <div class="sketch-pad-image-info">
+      <div>{{ image.name }}</div>
+      <div>{{ image.width }}px x {{ image.height }}px</div>
+      <div>{{ mouse.x ?? 0 }}, {{ mouse.y ?? 0 }}</div>
+    </div>
+  </div>
+  <div class="sketch-pad-color-pallete-container">
+    <div>
+      <input type="color" [value]="hexColor" (input)="update1($event)" (change)="update1($event)" />
+      <input
+        [min]="1"
+        [max]="200"
+        type="range"
+        [value]="lineWidth"
+        style="flex-grow: 1"
+        (input)="lineWidth = toNum($event)"
+      />
+    </div>
+    <div style="position: relative">
+      <div
+        style="position: absolute; top: 0px; left: 0px; cursor: pointer"
+        (click)="colorMode = colorMode === '1d' ? '2d' : '1d'"
+      >
+        {{ colorMode === "1d" ? "↗️" : "↘️" }}
+      </div>
+      <app-color-palette-1d
+        *ngIf="colorMode === '1d'"
+        class="sketch-pad-color-pallete-1d"
+        [radius]="lineWidth"
+        [colorIndex]="colorIndex"
+        (colorChanged)="setColorIndex($event)"
+      ></app-color-palette-1d>
+      <app-color-palette
+        *ngIf="colorMode === '2d'"
+        class="sketch-pad-color-pallete-2d"
+        [radius]="lineWidth"
+        [colorIndex]="colorIndex"
+        (colorChanged)="setColorIndex($event)"
+      ></app-color-palette>
+    </div>
+  </div>
+</div>

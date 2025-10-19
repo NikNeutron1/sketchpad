@@ -1,1 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+@import "assets/styles/util.scss";
+@import "assets/styles/neutron.scss";
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+* {
+  interpolate-size: allow-keywords;
+
+  --white: white;
+  --lightgrey: #cccccc;
+  --lightblue: #0078d4;
+  --lighterblue: #0291ff;
+  --darkblue: #01345d;
+  --darkerblue: #02233e;
+
+  --grey: #454545;
+  --darkgrey: #1f1f1f;
+
+  --red: #d40000;
+  --green: #00d451;
+  --yellow: #cdd400;
+}

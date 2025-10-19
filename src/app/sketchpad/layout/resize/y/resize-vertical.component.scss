@@ -1,0 +1,43 @@
+.resize-vertical {
+  height: 15px;
+  width: 100%;
+  cursor: ns-resize;
+  background: linear-gradient(
+    to top,
+    var(--grey) 0%,
+    var(--lightgrey) 40%,
+    var(--lightgrey) 60%,
+    #ffffff00 100%
+  );
+}
+
+.resize-vertical:hover {
+  background: linear-gradient(
+    to top,
+    #01345d 0%,
+    var(--lightblue) 40%,
+    var(--lightblue) 60%,
+    #ffffff00 100%
+  );
+}
+
+.resize-vertical-active {
+  background: linear-gradient(
+    to top,
+    var(--lightblue) 0%,
+    var(--lighterblue) 40%,
+    var(--lighterblue) 60%,
+    #ffffff00 100%
+  );
+}
+
+.resize-vertical-overlay {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  z-index: 20;
+  cursor: ns-resize;
+}

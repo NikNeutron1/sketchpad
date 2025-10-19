@@ -1,0 +1,16 @@
+<canvas
+  #colorPalette
+  class="color-pallete-1d"
+  style="border: 1px solid black"
+  [width]="width"
+  [height]="height"
+  (pointerleave)="onPointerUp($event)"
+  (pointerout)="onPointerUp($event)"
+  (pointerup)="onPointerUp($event)"
+  (pointermove)="onPointerMove($event)"
+  (pointerdown)="onPointerDown($event)"
+  (touchstart)="$event.preventDefault()"
+  (touchmove)="$event.preventDefault()"
+  (touchend)="$event.preventDefault()"
+  (touchcancel)="$event.preventDefault()"
+></canvas>

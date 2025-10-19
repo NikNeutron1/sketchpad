@@ -1,0 +1,25 @@
+<div
+  class="editor-layout"
+  [style]="'--sidebar-width: ' + sidebarWidth + 'px; --sidebar-height: ' + sidebarHeight + 'px;'"
+>
+  <div class="editor-layout-exhibit">
+    <ng-content select="[exhibit]"></ng-content>
+  </div>
+  <div class="editor-layout-sidebar">
+    <ng-content select="[sidebar]"></ng-content>
+  </div>
+
+  <app-resize-bar
+    class="editor-layout-resize-x"
+    style="pointer-events: auto"
+    [width]="sidebarWidth"
+    (changed)="sidebarWidth = $event"
+  ></app-resize-bar>
+
+  <app-resize-vertical
+    class="editor-layout-resize-y"
+    style="pointer-events: auto"
+    [height]="sidebarHeight"
+    (changed)="sidebarHeight = $event"
+  ></app-resize-vertical>
+</div>

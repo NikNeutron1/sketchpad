@@ -1,0 +1,13 @@
+<div class="draw-canvas-container">
+  <canvas
+    #drawCanvas
+    [width]="width"
+    [height]="height"
+    class="fancy-background"
+    (pointerdown)="onPointerDown($event)"
+    (pointermove)="onPointerMove($event)"
+    (pointerup)="onPointerUp($event)"
+    (pointerleave)="onPointerUp($event)"
+  ></canvas>
+  <app-memento [memento]="memento"></app-memento>
+</div>

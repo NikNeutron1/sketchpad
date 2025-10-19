@@ -1,0 +1,14 @@
+.neutron-button {
+  font-size: 14px;
+  padding: 5px;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  transition: border-color 0.3s;
+  cursor: pointer;
+}
+
+.neutron-button[disabled] {
+  background-color: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+}

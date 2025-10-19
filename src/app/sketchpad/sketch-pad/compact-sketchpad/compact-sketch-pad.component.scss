@@ -1,0 +1,64 @@
+.compact-sketchpad {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sketch-pad-canvas-exhibit {
+  position: relative;
+  --aspectRatio: 1;
+  display: flex;
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.sketch-pad-canvas-exhibit > canvas {
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: var(--aspectRatio);
+}
+
+.sketch-pad-image-info {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  font-size: 10pt;
+}
+
+.sketch-pad-color-pallete-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  width: 100%;
+  // aspect-ratio: 1 / 0.7;
+}
+
+.sketch-pad-color-pallete-container > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.sketch-pad-color-scroll {
+  display: block;
+  height: 100%;
+}
+
+.sketch-pad-color-pallete {
+  max-width: 100%;
+  max-height: 100%;
+  z-index: 2;
+  border: 1px solid blue;
+}
+
+.sketch-pad-color-pallete-1d {
+  height: auto;
+}
+
+.sketch-pad-color-pallete-2d {
+  // height: auto;
+}

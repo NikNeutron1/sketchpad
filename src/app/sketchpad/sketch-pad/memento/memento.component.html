@@ -1,0 +1,43 @@
+<div
+  class="memento-container"
+  [style]="hasUndo() || hasRedo() ? 'clip-path: circle(100%);' : 'clip-path: circle(0%);'"
+>
+  <div class="memento">
+    <div
+      class="memento-forward"
+      [style]="hasRedo() ? 'clip-path: circle(100%);' : 'clip-path: circle(0%);'"
+    >
+      <img
+        src="assets/icons/rotate-cw.svg"
+        [class.memento-backward-anim]="animate === 'undo'"
+        [class.memento-forward-anim]="animate === 'redo'"
+        type="image/svg+xml"
+        (click)="redo()"
+      />
+      <div *ngIf="hasRedo()" class="memento-counter">
+        {{ countRedo() }}
+      </div>
+    </div>
+    <div [style]="hasUndo() ? 'clip-path: circle(100%);' : 'clip-path: circle(0%);'">
+      <img
+        src="assets/icons/rotate-ccw.svg"
+        [class.memento-backward-anim]="animate === 'undo'"
+        [class.memento-forward-anim]="animate === 'redo'"
+        type="image/svg+xml"
+        (click)="undo()"
+      />
+      <div *ngIf="hasUndo()" class="memento-counter">
+        {{ countUndo() + (!isSaved() ? "*" : "") }}
+      </div>
+    </div>
+    <!-- <div [style]="hasUndo() ? 'clip-path: circle(100%);' : 'clip-path: circle(0%);'">
+      <img
+        src="assets/icons/menu.svg"
+        type="image/svg+xml"
+        width="24px"
+        height="24px"
+        (click)="toggleTransactions()"
+      />
+    </div> -->
+  </div>
+</div>

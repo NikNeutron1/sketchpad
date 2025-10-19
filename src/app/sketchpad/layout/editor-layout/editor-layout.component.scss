@@ -1,0 +1,48 @@
+.editor-layout {
+  --sidebar-width: 600px;
+  --sidebar-height: 400px;
+
+  display: grid;
+
+  max-height: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  min-width: 100%;
+
+  grid-template-areas: "sidebar resizeX exhibit";
+  grid-template-columns: var(--sidebar-width) 15px auto;
+  grid-template-rows: 1fr;
+}
+.editor-layout-resize-x {
+  display: unset;
+}
+.editor-layout-resize-y {
+  display: none;
+}
+.editor-layout-exhibit {
+  grid-area: exhibit;
+}
+.editor-layout-sidebar {
+  grid-area: sidebar;
+  overflow: auto;
+}
+@media (max-aspect-ratio: 0.8/1) {
+  .editor-layout {
+    grid-template-areas:
+      "exhibit"
+      "resizeY"
+      "sidebar";
+
+    grid-template-rows: var(--sidebar-height) 15px auto;
+    grid-template-columns: 1fr;
+
+    height: 100%;
+  }
+  .editor-layout-resize-x {
+    display: none;
+    height: 100%;
+  }
+  .editor-layout-resize-y {
+    display: unset;
+  }
+}

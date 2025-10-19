@@ -1,0 +1,58 @@
+.resize-bar {
+  width: 15px;
+  height: 100%;
+  cursor: ew-resize;
+  position: relative;
+  background: linear-gradient(
+    to right,
+    var(--grey) 0%,
+    var(--lightgrey) 40%,
+    var(--lightgrey) 60%,
+    #ffffff00 100%
+  );
+  overflow: hidden;
+}
+
+.resize-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    #01345d 0%,
+    var(--lightblue) 40%,
+    var(--lightblue) 60%,
+    #ffffff00 100%
+  );
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.resize-bar:hover::before {
+  opacity: 1;
+}
+
+.resize-bar-active {
+  // width: 30px;
+  background: linear-gradient(
+    to right,
+    #01345d 0%,
+    var(--lighterblue) 40%,
+    var(--lighterblue) 60%,
+    #ffffff00 100%
+  );
+}
+
+.resize-bar-overlay {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  z-index: 20;
+  cursor: ew-resize;
+}

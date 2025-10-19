@@ -1,0 +1,39 @@
+PROPRIETARY SOFTWARE CODE LICENSE AGREEMENT
+
+This Software Code License Agreement (the "Agreement") is made effective as of 19.10.25 (the "Effective Date") by and between:
+
+Licensor:
+Lukas Huhn
+
+WHEREAS, Licensor is the sole and exclusive owner of all rights, title, and interest in and to the software identified as "Open3dMaps" (the "Software"), including all intellectual property rights, source code, object code, documentation, and any derivative works thereof; and
+
+WHEREAS, Licensor maintains this Software as a proprietary offering, accessible to end-users solely via a web-based service or similar interface, subject to separate Terms of Service or User Agreements;
+
+NOW, THEREFORE, in consideration of the mutual covenants and promises herein contained, the parties agree as follows:
+
+1. Ownership and Proprietary Rights.
+a. Sole Ownership: The Software, including all copyrights, patents, trademarks, trade secrets, and other intellectual property rights inherent therein (collectively, "Intellectual Property"), are and shall remain the sole and exclusive property of Licensor.
+b. No Transfer of Ownership: This Agreement does not convey any ownership interest in or to the Software or its Intellectual Property to any third party.
+
+2. Restrictions and Prohibitions on the Software Code.
+No third party, including without limitation, any user of the Software, shall be permitted to, directly or indirectly:
+a. Copy, Reproduce, or Distribute: Copy, reproduce, or distribute the Software, in whole or in part.
+b. Modify, Adapt, or Create Derivative Works: Modify, adapt, translate, reverse engineer, decompile, disassemble, or create derivative works based on the Software.
+c. Sell, Lease, Rent, or Sublicense: Sell, lease, rent, loan, sublicense, or otherwise transfer or grant any rights in the Software to any third party.
+d. Access Source Code: Access, inspect, or receive the source code of the Software.
+e. Public Performance or Display: Publicly perform or display the Software, except through the normal operation of the web-based service provided by Licensor.
+f. Remove Notices: Remove, alter, or obscure any copyright, trademark, or other proprietary notices from the Software or its documentation.
+g. Circumvent Technological Measures: Attempt to circumvent any technological measures implemented by Licensor to protect the Software.
+h. AI/Machine Learning Training Prohibition: Use, copy, or exploit the Software code, or any portion thereof, for the training, development, or testing of artificial intelligence models, machine learning algorithms, large language models (LLMs), or any other form of data analysis intended to create derivative works or improve machine learning capabilities, without the express prior written consent of the Licensor. This prohibition applies regardless of whether such use is commercial or non-commercial.
+
+3. Disclaimer of Warranty.
+THE SOFTWARE CODE IS PROVIDED "AS IS," WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE LICENSOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE CODE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE CODE.
+
+4. Limitation of Liability.
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL LICENSOR BE LIABLE FOR ANY INDIRECT, INCIDENTAL, CONSEQUENTIAL, SPECIAL, PUNITIVE, OR EXEMPLARY DAMAGES (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION, LOSS OF BUSINESS INFORMATION, OR ANY OTHER PECUNIARY LOSS) ARISING OUT OF OR IN ANY WAY CONNECTED WITH THE USE OR INABILITY TO USE THE SOFTWARE CODE, EVEN IF LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+5. Governing Law.
+This Agreement shall be governed by and construed in accordance with the laws of [Your Country/State], without regard to its conflict of law principles.
+
+6. Entire Agreement.
+This Agreement constitutes the entire agreement between Licensor and any third party concerning the proprietary nature and restricted use of the Software code, and supersedes all prior and contemporaneous understandings or agreements, whether written or oral, regarding such subject matter.

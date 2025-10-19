@@ -1,0 +1,115 @@
+<app-editor-layout class="sketch-pad" [sidebarWidth]="300" [sidebarHeight]="430">
+  <div exhibit class="sketch-pad-canvas-exhibit">
+    <canvas
+      [width]="image.width"
+      [height]="image.height"
+      #sketchPad
+      class="fancy-background"
+      (mousedown)="drawStart($event)"
+      (mousemove)="drawMove($event)"
+      (mouseup)="drawStop($event)"
+      (mouseleave)="drawStop($event)"
+      (touchstart)="onTouchDown($event)"
+      (touchmove)="onTouchMove($event)"
+      (touchend)="onToucheUp($event)"
+    ></canvas>
+    <div class="sketch-pad-image-info">
+      <div>{{ image.name }}</div>
+      <div>{{ image.width }}px x {{ image.height }}px</div>
+      <div>{{ lastMouse?.x ?? 0 }}, {{ lastMouse?.y ?? 0 }}</div>
+    </div>
+  </div>
+  <div sidebar class="sketch-pad-sidebar">
+    <div class="sketch-pad-color-pallete-container">
+      <div class="sketch-pad-color-scroll">
+        <input
+          type="color"
+          [value]="hexColor"
+          (input)="update1($event)"
+          (change)="update1($event)"
+        />
+      </div>
+      <app-color-palette
+        style="z-index: 2"
+        class="sketch-pad-color-pallete"
+        [radius]="lineWidth"
+        [colorIndex]="colorIndex"
+        (colorChanged)="setColorIndex($event)"
+      ></app-color-palette>
+      <div class="sketch-pad-color-scroll" #vertSlider>
+        <input
+          type="range"
+          [style.--range-vertical-height]="getVertRange().height"
+          [style.--range-vertical-y-offest]="getVertRange().y"
+          [style.--range-vertical-x-offest]="getVertRange().x"
+          [value]="lineWidth"
+          (input)="setLineWidth($event)"
+          min="1"
+          max="200"
+          class="sketch-pad-range-vertical"
+        />
+      </div>
+    </div>
+    <app-color-palette-1d
+      class="sketch-pad-color-pallete-1d"
+      [radius]="lineWidth"
+      [colorIndex]="colorIndex"
+      (colorChanged)="setColorIndex($event)"
+    ></app-color-palette-1d>
+
+    <app-details [open]="true">
+      <div summary></div>
+      <div content>
+        <input
+          type="color"
+          class="sketch-pad-color2"
+          [value]="hexColor"
+          (input)="update1($event)"
+          (change)="update1($event)"
+        />
+        <div class="sketch-pad-setting">
+          <div>Line-Width</div>
+          <input
+            type="range"
+            [value]="lineWidth"
+            (input)="setLineWidth($event)"
+            min="1"
+            max="200"
+            class="sketch-pad-range"
+          />
+        </div>
+
+        <div class="sketch-pad-setting">
+          <div>Line-Width</div>
+          <input type="number" disabled [value]="lineWidth" />
+        </div>
+
+        <div class="sketch-pad-setting">
+          <div>Hex</div>
+          <input type="text" disabled [value]="hexColor" />
+        </div>
+
+        <div class="sketch-pad-settings">
+          <div>RGB</div>
+          <ng-container *ngFor="let v of mapping">
+            <input type="number" [value]="getChannel(v[0])" (input)="setColor(v[0], $event)" />
+          </ng-container>
+        </div>
+
+        <svg
+          [style.height]="lineWidth + 10 + 'px'"
+          [style.border-color]="hexColor"
+          [style.--sketchPadColor]="hexColor"
+          style="width: 100%; border: 1px solid blue; box-sizing: border-box"
+          class="sketch-pad-dot-view"
+          viewBox="0 -5 100 110"
+        >
+          <circle cx="50" cy="50" r="50" stroke="white" fill="none" stroke-width="10" />
+          <circle cx="50" cy="50" r="50" [attr.fill]="hexColor" />
+          <circle cx="50" cy="50" r="50" stroke="black" fill="none" />
+        </svg>
+      </div>
+    </app-details>
+  </div>
+</app-editor-layout>
+<app-memento [memento]="memento"></app-memento>

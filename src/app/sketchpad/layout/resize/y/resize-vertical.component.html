@@ -1,0 +1,16 @@
+<div
+  class="resize-vertical"
+  [class.resize-vertical-active]="mousedown"
+  (mouseenter)="onMouseEnter($event)"
+  (mousedown)="onMouseDown($event)"
+  (touchstart)="onTouchDown($event)"
+  (touchmove)="onTouchMove($event)"
+  (touchend)="onToucheUp($event)"
+></div>
+<div
+  *ngIf="mousedown"
+  class="resize-vertical-overlay"
+  (mouseleave)="onMouseLeave($event)"
+  (mouseup)="onMouseUp($event)"
+  (mousemove)="onMouseMove($event)"
+></div>

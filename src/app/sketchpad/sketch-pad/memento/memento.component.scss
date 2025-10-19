@@ -1,0 +1,78 @@
+.memento-container {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  z-index: 5;
+  border-radius: 5px;
+  background-color: white;
+  transition: all 0.3s linear;
+  max-height: 100vh;
+  overflow: auto;
+}
+
+.memento {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  justify-content: flex-end;
+}
+
+.memento > div {
+  width: 24px;
+  height: 24px;
+  transition: all 0.4s linear;
+  position: relative;
+}
+
+.memento-counter {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  size: 5px;
+  color: black;
+  background-color: white;
+  border-radius: 5px;
+  pointer-events: none;
+  font-size: 14px;
+  width: 14px;
+}
+.memento-forward > .memento-counter {
+  right: unset;
+  left: 0px;
+  opacity: 0;
+  transition: all 0.2s linear;
+}
+
+.memento-forward:hover > .memento-counter {
+  right: unset;
+  left: 0px;
+  opacity: 1;
+}
+
+.memento > * > img {
+  cursor: pointer;
+  transition: all 0.4s linear;
+}
+
+.memento-backward-anim {
+  animation: RotAnimA 0.4s linear forwards;
+  @keyframes RotAnimA {
+    from {
+      transform: rotate(360deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
+  }
+}
+.memento-forward-anim {
+  animation: RotAnimB 0.4s linear forwards;
+  @keyframes RotAnimB {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
