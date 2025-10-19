@@ -32,4 +32,4 @@ window['madeby'] = () => console.log('lukas huhn');
   ],
   exports: [],
 })
-export class ComponentsModule {}
+export class SketchpadModule {}

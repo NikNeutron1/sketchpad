@@ -10,13 +10,13 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { ColorUtils } from 'src/app/shared/math/util/color-utils';
 import { DrawCanvasComponent } from '../draw-canvas/draw-canvas.component';
-import { Algebra } from 'src/app/shared/math/model/algebra';
-import { IUniform } from 'src/app/rendering/material/uniform-types';
-import { CanvasTexture, ITexture } from 'src/app/main/threejs/three-exporter';
-import { TempSubscriber } from '../../../subscriber/temp-subscriber';
-import { InputHandler } from '../../../inputs/input-handler';
+import { Algebra } from '../../model/util/algebra';
+import { ColorUtils } from '../../model/util/color-utils';
+import { TempSubscriber } from '../../util/temp-subscriber';
+import { InputHandler } from './input-handler';
+import { CanvasTexture, Texture } from 'three';
+import { IUniform } from '../../model/types';
 
 @Component({
   selector: 'app-compact-sketch-pad',
@@ -28,7 +28,7 @@ export class CompactSketchPadComponent
   implements AfterViewInit, OnDestroy, OnChanges
 {
   @Input()
-  uniform: IUniform<ITexture>;
+  uniform: IUniform<Texture>;
 
   texture: CanvasTexture;
 
@@ -65,7 +65,7 @@ export class CompactSketchPadComponent
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('uniform' in changes) {
-      this.drawCanvas.restoreTexture = this.uniform.value;
+      // this.drawCanvas.restoreTexture = this.uniform.value;
       this.uniform.value = this.texture;
       this.drawCanvas.ready.ifPromised(() => {
         this.drawCanvas.resetSource();

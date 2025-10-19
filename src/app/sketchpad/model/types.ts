@@ -94,3 +94,7 @@ export type StringOfLength<Char extends IChar36, Length extends number> = Join<
 export type IChar36Id = StringOfLength<'z', 8>;
 
 export type IHexColor = `#${StringOfLength<Char16, 6>}`;
+
+export interface IUniform<T> {
+  value: T;
+}
