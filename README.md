@@ -2,16 +2,14 @@
 
 **[✨ LIVE DEMO]** (https://nikneutron1.github.io/sketchpad/)
 
-The Project is extracted from a bigger personal project I got going on. It uses Angular version 16.2.16.
+A Sketchpad that runs on Desktops and Mobile Devices using an experimental Color Palette.
 
-It is meant to showcase my approach to coding with angular as well as some of the problems I care about.
+I made those components after asking myself how a Color Palette would look like that contains all colors in one picture. The Project has a 2D Color palette and and 1D Color palette. It uses Hilbert Curves to find all colors within the RGB Cube. The Repository is part of a bigger personal project I got going and is primarily meant to show case some of my abilities.
 
-Unit Tests only exist in limited form and only for the purpose of showcasing my ability to write them. The personal project doesn't contain many of them due to it not having any production pressure or collaboration with other developers.
+The project has an embarrassingly small amount of Unit Tests. There are no tests yet, that require Mocks or a deeper setup. I will probably add some more tests in the future.
 
 Example Unit Test Classes
   - point-2d.spec.ts tests some functions of a utility class
-
-(TODO) add test classes for at least one service and one component to demonstrate mocking.    
 
 ## RUN LOCALLY (DEV MODE)
 
