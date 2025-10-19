@@ -4,7 +4,9 @@
 
 A Sketchpad that runs on Desktops and Mobile Devices using an experimental Color Palette.
 
-I made those components after asking myself how a Color Palette would look like that contains all colors in one picture. The Project has a 2D Color palette and and 1D Color palette. It uses Hilbert Curves to find all colors within the RGB Cube. The Repository is part of a bigger personal project I got going and is primarily meant to show case some of my abilities.
+I made those components after asking myself how a Color Palette would look like that contains all colors in one picture. The Project has a 2D Color palette and and 1D Color palette. It uses Hilbert Curves to find all colors within the RGB Cube. The Repository is part of a bigger personal project I got going and is primarily serves as a show case for me a developer.
+
+The bigger project is not on github. I have self hosted gitlab instance at home, that I'm usually working with.
 
 The project has an embarrassingly small amount of Unit Tests. There are no tests yet, that require Mocks or a deeper setup. I will probably add some more tests in the future.
 
