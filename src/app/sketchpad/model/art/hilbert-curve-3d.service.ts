@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { MatrixService } from '../service/matrix.service';
 import { MatrixWorkerService } from '../service/matrix-worker.service';
 import { IMatrix4D } from '../types';
 import { EfficientPoint3IntArray } from '../util/EfficientPoint3IntArray';
+import { DomMatrixService } from '../service/dom-matrix.service';
 
 @Injectable({ providedIn: 'root' })
 export class HilbertCurve3DService {
-  private matrixCollections: IMatrix4D[][] = [];
+  matrixCollections: IMatrix4D[][] = [];
   constructor(
-    private readonly matrixService: MatrixService,
+    private readonly matrixService: DomMatrixService,
     private readonly matrixWorkerService: MatrixWorkerService,
   ) {
     this.init();
@@ -111,7 +111,34 @@ export class HilbertCurve3DService {
       this.matrixService.translate(0, -2 * length, -length),
     ]);
 
-    [
+    // [
+    //   matrix1,
+    //   matrix2,
+    //   matrix3,
+    //   matrix4,
+    //   matrix5,
+    //   matrix6,
+    //   matrix7,
+    //   matrix8,
+    // ].forEach((matrix) => {
+    //   for (let i = 0; i < matrix.elements.length; i++) {
+    //     const ten = Math.pow(10, 0);
+    //     matrix.elements[i] = Math.round(matrix.elements[i] * ten) / ten;
+    //   }
+    // });
+
+    // return [
+    //   matrix1,
+    //   matrix2,
+    //   matrix3,
+    //   matrix4,
+    //   matrix5,
+    //   matrix6,
+    //   matrix7,
+    //   matrix8,
+    // ];
+
+    const [m1, m2, m3, m4, m5, m6, m7, m8] = [
       matrix1,
       matrix2,
       matrix3,
@@ -120,22 +147,15 @@ export class HilbertCurve3DService {
       matrix6,
       matrix7,
       matrix8,
-    ].forEach((matrix) => {
+    ].map((m) => this.matrixService.domMatrixToMatrix4(m));
+
+    [m1, m2, m3, m4, m5, m6, m7, m8].forEach((matrix) => {
       for (let i = 0; i < matrix.elements.length; i++) {
         const ten = Math.pow(10, 0);
         matrix.elements[i] = Math.round(matrix.elements[i] * ten) / ten;
       }
     });
 
-    return [
-      matrix1,
-      matrix2,
-      matrix3,
-      matrix4,
-      matrix5,
-      matrix6,
-      matrix7,
-      matrix8,
-    ];
+    return [m1, m2, m3, m4, m5, m6, m7, m8];
   }
 }

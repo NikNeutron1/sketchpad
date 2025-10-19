@@ -15,7 +15,6 @@ import { Algebra } from '../../model/util/algebra';
 import { ColorUtils } from '../../model/util/color-utils';
 import { TempSubscriber } from '../../util/temp-subscriber';
 import { InputHandler } from './input-handler';
-import { CanvasTexture, Texture } from 'three';
 import { IUniform } from '../../model/types';
 
 @Component({
@@ -27,10 +26,10 @@ export class CompactSketchPadComponent
   extends InputHandler
   implements AfterViewInit, OnDestroy, OnChanges
 {
-  @Input()
-  uniform: IUniform<Texture>;
+  // @Input()
+  // uniform: IUniform<Texture>;
 
-  texture: CanvasTexture;
+  // texture: CanvasTexture;
 
   colorIndex = 0;
 
@@ -55,18 +54,18 @@ export class CompactSketchPadComponent
   ngAfterViewInit(): void {
     this.subs = TempSubscriber.from(
       this.drawCanvas.onDrawLine.subscribe(() => {
-        this.texture.needsUpdate = true;
+        // this.texture.needsUpdate = true;
       }),
     );
     const canvas = this.drawCanvas.canvasRef.nativeElement;
-    this.texture = new CanvasTexture(canvas);
-    this.uniform.value = this.texture;
+    // this.texture = new CanvasTexture(canvas);
+    // this.uniform.value = this.texture;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('uniform' in changes) {
       // this.drawCanvas.restoreTexture = this.uniform.value;
-      this.uniform.value = this.texture;
+      // this.uniform.value = this.texture;
       this.drawCanvas.ready.ifPromised(() => {
         this.drawCanvas.resetSource();
       }) || this.drawCanvas.resetSource();

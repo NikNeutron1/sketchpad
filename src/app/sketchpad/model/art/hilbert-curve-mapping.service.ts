@@ -82,6 +82,8 @@ export class HilbertCurveMappingService {
       this.rgbToHilbertDistance[index3d] = index;
     });
     this.curve3d = curve3d;
+
+    const test = this.hilbertCurve3DService.curve3d(2);
   }
 
   colorIndexToDistance(colorIndex: number): number {
