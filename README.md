@@ -1,5 +1,7 @@
 # Sketchpad
 
+**[✨ LIVE DEMO]** (https://nikneutron1.github.io/sketchpad/)
+
 The Project is extracted from a bigger personal project I got going on. It uses Angular version 16.2.16.
 
 It is meant to showcase my approach to coding with angular as well as some of the problems I care about.
@@ -21,4 +23,5 @@ Run `npm run test`.
 
 # BUILDING AND DEPLOYMENT
 
-There is no deployment pipeline set up yet.
+There is a simple github pages deployment set up. Run `ng deploy`.
+
