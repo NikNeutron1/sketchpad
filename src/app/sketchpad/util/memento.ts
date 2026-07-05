@@ -5,9 +5,7 @@ export class Memento<T> {
   private changes: T[] = [];
   private changed = new Subject<'undo' | 'redo'>();
 
-  constructor(
-    private applyChange: (change: T, type: 'undo' | 'redo') => void,
-  ) {}
+  constructor(private applyChange: (change: T, type: 'undo' | 'redo') => void) {}
 
   onChanged(): Observable<'undo' | 'redo'> {
     return this.changed;

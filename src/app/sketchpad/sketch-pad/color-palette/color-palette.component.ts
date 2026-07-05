@@ -64,9 +64,8 @@ export class ColorPaletteComponent implements OnChanges, OnInit, AfterViewInit {
     this.ngOnInit();
   }
   ngOnInit(): void {
-    this.hilberColorPalette
-      .getPalette2d()
-      .ifPromised(() => this.repaintCanvas()) || this.repaintCanvas();
+    this.hilberColorPalette.getPalette2d().ifPromised(() => this.repaintCanvas()) ||
+      this.repaintCanvas();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -74,10 +73,7 @@ export class ColorPaletteComponent implements OnChanges, OnInit, AfterViewInit {
       return;
     }
     if ('colorIndex' in changes) {
-      if (
-        this.colorIndex_ === this.colorIndex ||
-        this.colorIndex === undefined
-      ) {
+      if (this.colorIndex_ === this.colorIndex || this.colorIndex === undefined) {
       } else {
         this.mouse = this.colorToMouse(this.colorIndex);
         this.colorIndex_ = this.colorIndex;
@@ -171,16 +167,10 @@ export class ColorPaletteComponent implements OnChanges, OnInit, AfterViewInit {
   colorToMouse(colorIndex: number): IPoint2D {
     const rgb = ColorUtils.colorIndexToRGB(colorIndex);
     const sizeRGB = ColorUtils.sizeRGB();
-    const walk3dDistance = this.hilbertCurveMappingService.rgbPointToDistance(
-      rgb,
-      sizeRGB,
-    );
+    const walk3dDistance = this.hilbertCurveMappingService.rgbPointToDistance(rgb, sizeRGB);
 
     const size1d = this.hilbertCurveMappingService.getSize1d();
-    const point = this.hilbertCurveMappingService.distanceToXY(
-      walk3dDistance,
-      size1d,
-    );
+    const point = this.hilbertCurveMappingService.distanceToXY(walk3dDistance, size1d);
 
     const canvas: HTMLCanvasElement = this.canvasRef.nativeElement;
     const width = canvas.width;
@@ -197,15 +187,9 @@ export class ColorPaletteComponent implements OnChanges, OnInit, AfterViewInit {
     const myBounds = this.getSize();
     const size1d = this.hilbertCurveMappingService.getSize1d();
     const size2d = this.hilbertCurveMappingService.getSize2d();
-    const walk3dDistance = this.hilbertCurveMappingService.xyPointToDistance(
-      mouse,
-      myBounds,
-    );
+    const walk3dDistance = this.hilbertCurveMappingService.xyPointToDistance(mouse, myBounds);
     const size3d = this.hilbertCurveMappingService.getSize3d();
-    const color = this.hilbertCurveMappingService.distanceToRGB(
-      walk3dDistance,
-      size1d,
-    );
+    const color = this.hilbertCurveMappingService.distanceToRGB(walk3dDistance, size1d);
     color.x = Math.floor((color.x * 256.0) / size3d.width);
     color.y = Math.floor((color.y * 256.0) / size3d.height);
     color.z = Math.floor((color.z * 256.0) / size3d.depth);

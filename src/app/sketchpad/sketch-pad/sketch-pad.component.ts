@@ -1,11 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { BlobTextureService } from '../services/blob-texture.service';
 import { ShortcutService } from '../services/shortcut.service';
 import { TempSubscriber } from '../util/temp-subscriber';
@@ -65,9 +58,7 @@ export class SketchPadComponent implements OnInit, AfterViewInit, OnDestroy {
       this.resetSource();
       const history = this.memento.getChangesUntil(change);
       // console.log(history, this.image.source);
-      history.forEach((change) =>
-        change.forEach((item) => this.drawPoint(item)),
-      );
+      history.forEach((change) => change.forEach((item) => this.drawPoint(item)));
     }
   });
 

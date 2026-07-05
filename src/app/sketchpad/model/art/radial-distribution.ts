@@ -13,11 +13,7 @@ export class RadialDistribution {
     });
   }
 
-  private static createRing(
-    radius: number,
-    count: number,
-    offset: number,
-  ): IPoint2D[] {
+  private static createRing(radius: number, count: number, offset: number): IPoint2D[] {
     const result = [];
     for (let i = 0; i < count; i++) {
       const degree = (i * 360) / count + offset;

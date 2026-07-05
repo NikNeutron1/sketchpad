@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "author": "Lukas Huhn",
   "license": "SEE LICENSE IN LICENSE.txt",
+  "packageManager": "pnpm@9.15.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 4201",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test2": "ng test --watch=false --browsers=ChromeHeadless",
-    "format:fix": "prettier --write \"src/**/*.ts\""
+    "format:fix0": "prettier --write \"src/**/*.ts\"",
+    "format:fix": "prettier --write \"src/**/*.{ts,html}\""
   },
   "private": true,
   "dependencies": {

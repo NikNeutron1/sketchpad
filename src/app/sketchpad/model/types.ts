@@ -1,5 +1,4 @@
-export type IBlobUrl =
-  'blob:https://example.com/ecaee94a-9991-4b46-bb3c-835621a6702f';
+export type IBlobUrl = 'blob:https://example.com/ecaee94a-9991-4b46-bb3c-835621a6702f';
 
 export interface IBoundsSize {
   width: number;
@@ -81,11 +80,9 @@ type Join<T extends string[], Separator extends string = ''> = T extends [
     : ''
   : '';
 
-type Repeat<
-  T extends string,
-  N extends number,
-  Acc extends string[] = [],
-> = Acc['length'] extends N ? Acc : Repeat<T, N, [...Acc, T]>;
+type Repeat<T extends string, N extends number, Acc extends string[] = []> = Acc['length'] extends N
+  ? Acc
+  : Repeat<T, N, [...Acc, T]>;
 
 export type StringOfLength<Char extends IChar36, Length extends number> = Join<
   Repeat<Char, Length>

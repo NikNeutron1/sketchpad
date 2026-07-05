@@ -99,11 +99,7 @@ export class HilbertCurveMappingService {
     return this.curve3d.getColorIndex(index);
   }
 
-  distanceToRGB(
-    distance: number,
-    max: number,
-    target = Algebra.createPoint3D(),
-  ): IPoint3D {
+  distanceToRGB(distance: number, max: number, target = Algebra.createPoint3D()): IPoint3D {
     const size1d = this.getSize1d();
     const index = Math.floor(distance * (size1d / max));
     return this.curve3d.get(index, target);

@@ -65,12 +65,7 @@ export class Bounds {
   }
 
   static fromCenter(center: IPoint2D, radius: number): IBounds {
-    return Algebra.createBounds(
-      center.x - radius,
-      center.y - radius,
-      2 * radius,
-      2 * radius,
-    );
+    return Algebra.createBounds(center.x - radius, center.y - radius, 2 * radius, 2 * radius);
   }
 
   static fromPoints(...points: IPoint2D[]): IBounds {
@@ -92,22 +87,10 @@ export class Bounds {
     if (!array.length || array.length % 2 === 1) {
       return Bounds.creatNotInitialized();
     }
-    const minX = array.reduce(
-      (min, v, i) => (i % 2 == 0 && v < min ? v : min),
-      array[0],
-    );
-    const minY = array.reduce(
-      (min, v, i) => (i % 2 == 1 && v < min ? v : min),
-      array[1],
-    );
-    const maxX = array.reduce(
-      (max, v, i) => (i % 2 == 0 && v > max ? v : max),
-      array[0],
-    );
-    const maxY = array.reduce(
-      (max, v, i) => (i % 2 == 1 && v > max ? v : max),
-      array[1],
-    );
+    const minX = array.reduce((min, v, i) => (i % 2 == 0 && v < min ? v : min), array[0]);
+    const minY = array.reduce((min, v, i) => (i % 2 == 1 && v < min ? v : min), array[1]);
+    const maxX = array.reduce((max, v, i) => (i % 2 == 0 && v > max ? v : max), array[0]);
+    const maxY = array.reduce((max, v, i) => (i % 2 == 1 && v > max ? v : max), array[1]);
     return Algebra.createBounds(minX, minY, maxX - minX, maxY - minY);
   }
 
@@ -164,14 +147,8 @@ export class Bounds {
     return target;
   }
 
-  static mergeAll(
-    boundsList: IBounds[],
-    target = this.creatNotInitialized(),
-  ): IBounds {
-    return boundsList.reduce(
-      (sum, bounds) => this.merge(bounds, sum, sum),
-      target,
-    );
+  static mergeAll(boundsList: IBounds[], target = this.creatNotInitialized()): IBounds {
+    return boundsList.reduce((sum, bounds) => this.merge(bounds, sum, sum), target);
   }
 
   static intersects(bounds1: IBounds, bounds2: IBounds): boolean {
@@ -217,10 +194,6 @@ export class Bounds {
   }
 
   static p2(bounds: IBounds, target = Algebra.createPoint2D()): IPoint2D {
-    return Point2D.set(
-      target,
-      bounds.x + bounds.width,
-      bounds.y + bounds.height,
-    );
+    return Point2D.set(target, bounds.x + bounds.width, bounds.y + bounds.height);
   }
 }

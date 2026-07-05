@@ -27,7 +27,7 @@
         (click)="undo()"
       />
       <div *ngIf="hasUndo()" class="memento-counter">
-        {{ countUndo() + (!isSaved() ? "*" : "") }}
+        {{ countUndo() + (!isSaved() ? '*' : '') }}
       </div>
     </div>
     <!-- <div [style]="hasUndo() ? 'clip-path: circle(100%);' : 'clip-path: circle(0%);'">

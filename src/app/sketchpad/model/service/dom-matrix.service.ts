@@ -34,10 +34,7 @@ export class DomMatrixService {
   }
 
   multiplySequence(array: DOMMatrix[]): DOMMatrix {
-    return array.reduce(
-      (result, matrix) => this.multiplyMatrices(result, matrix),
-      this.create(),
-    );
+    return array.reduce((result, matrix) => this.multiplyMatrices(result, matrix), this.create());
   }
 
   multiplyMatrices(a: DOMMatrix, b: DOMMatrix): DOMMatrix {

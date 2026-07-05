@@ -18,11 +18,7 @@ export class ArrayUtils {
     return -1;
   }
 
-  public static difference<T>(
-    a: T[],
-    b: T[],
-    equals: (a: T, b: T) => boolean,
-  ): T[] {
+  public static difference<T>(a: T[], b: T[], equals: (a: T, b: T) => boolean): T[] {
     return a.filter((v1) => !b.find((v2) => equals(v1, v2)));
   }
 
@@ -34,10 +30,7 @@ export class ArrayUtils {
     return [...new Set(array)];
   }
 
-  public static distinctBy<T>(
-    array: T[],
-    equals: (a: T, b: T) => boolean,
-  ): T[] {
+  public static distinctBy<T>(array: T[], equals: (a: T, b: T) => boolean): T[] {
     const result: T[] = [];
     array.forEach((item) => {
       const found = result.find((item2) => equals(item, item2));
@@ -139,10 +132,7 @@ export class ArrayUtils {
     values.forEach((value) => this.remove(array, value));
   }
 
-  public static removeByPredicate<T>(
-    arr: T[],
-    predicate: (val: T) => boolean,
-  ): T[] {
+  public static removeByPredicate<T>(arr: T[], predicate: (val: T) => boolean): T[] {
     let v: T | undefined;
     while (!!(v = arr.find(predicate))) {
       this.remove(arr, v);
@@ -180,17 +170,11 @@ export class ArrayUtils {
   ): Uint32Array {
     return this.createUniformArray(arr, new Uint32Array(length));
   }
-  static createUniformFloat32Array(
-    length: number,
-    arr = new Float32Array(0),
-  ): Float32Array {
+  static createUniformFloat32Array(length: number, arr = new Float32Array(0)): Float32Array {
     return this.createUniformArray(arr, new Float32Array(length));
   }
 
-  private static createUniformArray<T extends NumberArray>(
-    arr: T | number[],
-    result: T,
-  ): T {
+  private static createUniformArray<T extends NumberArray>(arr: T | number[], result: T): T {
     return (arr as any).reduce((aggr: T, val: number, index: number) => {
       index < result.length && (aggr[index] = val);
       return aggr;
@@ -209,18 +193,10 @@ export class ArrayUtils {
   }
 
   static f(x: number): number {
-    return (
-      Math.pow(x, 4) + 2.833 * Math.pow(x, 3) - 71 * x * x + 223.167 * x - 84
-    );
+    return Math.pow(x, 4) + 2.833 * Math.pow(x, 3) - 71 * x * x + 223.167 * x - 84;
   }
   static g(x: number): number {
-    return (
-      -Math.pow(x, 4) * 0.958 +
-      18.083 * Math.pow(x, 3) -
-      110.04 * x * x +
-      258.917 * x -
-      90
-    );
+    return -Math.pow(x, 4) * 0.958 + 18.083 * Math.pow(x, 3) - 110.04 * x * x + 258.917 * x - 90;
   }
   static h(x: number): number {
     if (x > 4) return Math.round(this.f(x - 4));

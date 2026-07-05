@@ -24,10 +24,7 @@ export class ColorUtils {
     return '#' + this.toHex(r) + this.toHex(g) + this.toHex(b);
   }
   public static rgbPointToHex(p: IPoint3D): IHexColor {
-    return ('#' +
-      this.toHex(p.x) +
-      this.toHex(p.y) +
-      this.toHex(p.z)) as IHexColor;
+    return ('#' + this.toHex(p.x) + this.toHex(p.y) + this.toHex(p.z)) as IHexColor;
   }
   public static hexToInt(hex: string): number {
     return Number.parseInt(hex.replace('#', ''), 16);
@@ -50,10 +47,7 @@ export class ColorUtils {
 */
   }
 
-  public static hexToFloat(
-    hex: string,
-    result = Algebra.createPoint3D(),
-  ): IPoint3D {
+  public static hexToFloat(hex: string, result = Algebra.createPoint3D()): IPoint3D {
     result.x = parseInt(hex.substring(1, 3), 16) / 255.0;
     result.y = parseInt(hex.substring(3, 5), 16) / 255.0;
     result.z = parseInt(hex.substring(5, 7), 16) / 255.0;
@@ -61,16 +55,12 @@ export class ColorUtils {
   }
 
   public static floatToHex(color: IPoint3D): string {
-    const colorIndex =
-      color.x * 255 * 255 * 255 + color.y * 255 * 255 + color.z * 255;
+    const colorIndex = color.x * 255 * 255 * 255 + color.y * 255 * 255 + color.z * 255;
     return this.colorIndexToHex(colorIndex);
   }
 
   private static tmpResult = Algebra.createPoint3D();
-  public static hexToRGB(
-    hex: string,
-    result: IPoint3D = this.tmpResult,
-  ): IPoint3D {
+  public static hexToRGB(hex: string, result: IPoint3D = this.tmpResult): IPoint3D {
     result.x = parseInt(hex.substring(1, 3), 16);
     result.y = parseInt(hex.substring(3, 5), 16);
     result.z = parseInt(hex.substring(5, 7), 16);
@@ -134,8 +124,7 @@ export class ColorUtils {
   }
   private static randomBrightness(usedColors: boolean[]): string {
     const random = this.random();
-    const v =
-      random >= 1 ? Math.floor(255 * (random - 1)) : Math.floor(255 * random);
+    const v = random >= 1 ? Math.floor(255 * (random - 1)) : Math.floor(255 * random);
     const color: number[] = new Array(3);
     for (let i = 0; i < 3; i++) {
       if (usedColors[i]) {
@@ -147,8 +136,7 @@ export class ColorUtils {
     return this.rgbToHexArr(color);
   }
   public static brightness(usedColors: boolean[], value: number): string {
-    const v =
-      value >= 1 ? Math.floor(255 * (value - 1)) : Math.floor(255 * value);
+    const v = value >= 1 ? Math.floor(255 * (value - 1)) : Math.floor(255 * value);
     const color: number[] = new Array(3);
     for (let i = 0; i < 3; i++) {
       if (usedColors[i]) {
@@ -160,17 +148,11 @@ export class ColorUtils {
     return this.rgbToHexArr(color);
   }
 
-  static colorIndexToFloat(
-    value: number,
-    result = Algebra.createPoint3D(),
-  ): IPoint3D {
+  static colorIndexToFloat(value: number, result = Algebra.createPoint3D()): IPoint3D {
     return this.colorToFloat(this.colorIndexToRGB(value, result), result);
   }
 
-  public static colorIndexToRGB(
-    value: number,
-    result = Algebra.createPoint3D(),
-  ): IPoint3D {
+  public static colorIndexToRGB(value: number, result = Algebra.createPoint3D()): IPoint3D {
     // const div = 256;
     // result.x = Math.floor(value / (div * div)) % div;
     // result.y = Math.floor(value / div) % div;

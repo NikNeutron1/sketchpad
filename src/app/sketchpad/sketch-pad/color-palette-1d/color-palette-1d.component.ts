@@ -22,9 +22,7 @@ import { TempSubscriber } from '../../util/temp-subscriber';
   templateUrl: './color-palette-1d.component.html',
   styleUrls: ['./color-palette-1d.component.scss'],
 })
-export class ColorPalette1dComponent
-  implements OnChanges, OnInit, AfterViewInit
-{
+export class ColorPalette1dComponent implements OnChanges, OnInit, AfterViewInit {
   @Input()
   colorIndex: number;
 
@@ -67,9 +65,7 @@ export class ColorPalette1dComponent
   }
   ngOnInit(): void {
     this.repaintCanvas();
-    this.hilberColorPalette
-      .getPalette1d()
-      .ifPromised(() => this.repaintCanvas());
+    this.hilberColorPalette.getPalette1d().ifPromised(() => this.repaintCanvas());
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -77,10 +73,7 @@ export class ColorPalette1dComponent
       return;
     }
     if ('colorIndex' in changes) {
-      if (
-        this.colorIndex_ === this.colorIndex ||
-        this.colorIndex === undefined
-      ) {
+      if (this.colorIndex_ === this.colorIndex || this.colorIndex === undefined) {
       } else {
         this.mouse = this.colorToMouse(this.colorIndex);
         this.colorIndex_ = this.colorIndex;
@@ -174,10 +167,7 @@ export class ColorPalette1dComponent
   colorToMouse(colorIndex: number): IPoint2D {
     const rgb = ColorUtils.colorIndexToRGB(colorIndex);
     const sizeRGB = ColorUtils.sizeRGB();
-    const distance = this.hilbertCurveMappingService.rgbPointToDistance(
-      rgb,
-      sizeRGB,
-    );
+    const distance = this.hilbertCurveMappingService.rgbPointToDistance(rgb, sizeRGB);
     const size1d = this.hilbertCurveMappingService.getSize1d();
     const x = distance * (this.width / size1d);
     return Algebra.createPoint2D(x, 0);
@@ -185,10 +175,7 @@ export class ColorPalette1dComponent
 
   mouseToColorIndex(mouse: IPoint2D): number {
     const size3d = this.hilbertCurveMappingService.getSize3d();
-    const color = this.hilbertCurveMappingService.distanceToRGB(
-      mouse.x,
-      this.width,
-    );
+    const color = this.hilbertCurveMappingService.distanceToRGB(mouse.x, this.width);
     color.x = Math.floor((color.x * 256.0) / size3d.width);
     color.y = Math.floor((color.y * 256.0) / size3d.height);
     color.z = Math.floor((color.z * 256.0) / size3d.depth);

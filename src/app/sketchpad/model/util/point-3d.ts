@@ -29,12 +29,7 @@ export class Point3D {
     if (!value || typeof value === 'number') {
       return false;
     }
-    return (
-      'x' in value &&
-      'y' in value &&
-      'z' in value &&
-      Object.keys(value).length <= 4
-    );
+    return 'x' in value && 'y' in value && 'z' in value && Object.keys(value).length <= 4;
   }
 
   static setPoint<T extends IPoint3D>(target: T, value: IPoint3D): T {
@@ -43,11 +38,7 @@ export class Point3D {
   static setPoint2(target: IPoint3D, value: IPoint2D, z: number = 0): void {
     this.set(target, value.x, value.y, z);
   }
-  static normalize(
-    vec: IPoint3D,
-    length = 1,
-    target = Algebra.createPoint3D(),
-  ): IPoint3D {
+  static normalize(vec: IPoint3D, length = 1, target = Algebra.createPoint3D()): IPoint3D {
     const size = Point3D.size(vec);
     this.mul(vec, length / size, target);
     return target;
@@ -67,11 +58,7 @@ export class Point3D {
     }
     return result;
   }
-  static add(
-    p1: IPoint3D,
-    p2: IPoint3D,
-    target = Algebra.createPoint3D(),
-  ): IPoint3D {
+  static add(p1: IPoint3D, p2: IPoint3D, target = Algebra.createPoint3D()): IPoint3D {
     target.x = p1.x + p2.x;
     target.y = p1.y + p2.y;
     target.z = p1.z + p2.z;
@@ -89,21 +76,13 @@ export class Point3D {
     target.z = p.z + z;
     return target;
   }
-  static sub(
-    p1: IPoint3D,
-    p2: IPoint3D,
-    target = Algebra.createPoint3D(),
-  ): IPoint3D {
+  static sub(p1: IPoint3D, p2: IPoint3D, target = Algebra.createPoint3D()): IPoint3D {
     target.x = p1.x - p2.x;
     target.y = p1.y - p2.y;
     target.z = p1.z - p2.z;
     return target;
   }
-  static mul(
-    p: IPoint3D,
-    m: number,
-    target = Algebra.createPoint3D(),
-  ): IPoint3D {
+  static mul(p: IPoint3D, m: number, target = Algebra.createPoint3D()): IPoint3D {
     target.x = p.x * m;
     target.y = p.y * m;
     target.z = p.z * m;
@@ -118,11 +97,7 @@ export class Point3D {
   static size(p: IPoint3D): number {
     return Math.sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
   }
-  static vectorProduct(
-    vec1: IPoint3D,
-    vec2: IPoint3D,
-    result = Algebra.createPoint3D(),
-  ): IPoint3D {
+  static vectorProduct(vec1: IPoint3D, vec2: IPoint3D, result = Algebra.createPoint3D()): IPoint3D {
     result.x = vec1.y * vec2.z - vec1.z * vec2.y;
     result.y = vec1.z * vec2.x - vec1.x * vec2.z;
     result.z = vec1.x * vec2.y - vec1.y * vec2.x;
@@ -146,22 +121,14 @@ export class Point3D {
 
     return `(${x}, ${y}, ${z})`;
   }
-  public static floor(
-    p: IPoint3D,
-    digits = 0,
-    result = Algebra.createPoint3D(),
-  ): IPoint3D {
+  public static floor(p: IPoint3D, digits = 0, result = Algebra.createPoint3D()): IPoint3D {
     const ten = Math.pow(10, digits);
     result.x = Math.floor(p.x * ten) / ten;
     result.y = Math.floor(p.y * ten) / ten;
     result.z = Math.floor(p.z * ten) / ten;
     return result;
   }
-  public static round(
-    p: IPoint3D,
-    digits = 0,
-    result = Algebra.createPoint3D(),
-  ): IPoint3D {
+  public static round(p: IPoint3D, digits = 0, result = Algebra.createPoint3D()): IPoint3D {
     const ten = Math.pow(10, digits);
     result.x = Math.round(p.x * ten) / ten;
     result.y = Math.round(p.y * ten) / ten;
@@ -175,11 +142,7 @@ export class Point3D {
     return target;
   }
 
-  static avg2(
-    a: IPoint3D,
-    b: IPoint3D,
-    target = Algebra.createPoint3D(),
-  ): IPoint3D {
+  static avg2(a: IPoint3D, b: IPoint3D, target = Algebra.createPoint3D()): IPoint3D {
     target.x = (a.x + b.x) / 2;
     target.y = (a.y + b.y) / 2;
     target.z = (a.z + b.z) / 2;
@@ -208,11 +171,7 @@ export class Point3D {
   }
 
   // this one might be wrong rotated
-  static rotateXY(
-    p: IPoint3D,
-    deg: number,
-    target = Algebra.createPoint3D(),
-  ): IPoint3D {
+  static rotateXY(p: IPoint3D, deg: number, target = Algebra.createPoint3D()): IPoint3D {
     const alpha = (deg * 2 * Math.PI) / 360;
     const px = p.x;
     const py = p.y;
@@ -222,11 +181,7 @@ export class Point3D {
     return target;
   }
 
-  static rotateXZ(
-    p: IPoint3D,
-    deg: number,
-    target = Algebra.createPoint3D(),
-  ): IPoint3D {
+  static rotateXZ(p: IPoint3D, deg: number, target = Algebra.createPoint3D()): IPoint3D {
     const alpha = (deg * 2 * Math.PI) / 360;
     const px = p.x;
     const pz = p.z;
@@ -236,11 +191,7 @@ export class Point3D {
     return target;
   }
 
-  static rotateYZ(
-    p: IPoint3D,
-    deg: number,
-    target = Algebra.createPoint3D(),
-  ): IPoint3D {
+  static rotateYZ(p: IPoint3D, deg: number, target = Algebra.createPoint3D()): IPoint3D {
     const alpha = (deg * 2 * Math.PI) / 360;
     const py = p.y;
     const pz = p.z;

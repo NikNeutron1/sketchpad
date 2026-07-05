@@ -36,10 +36,7 @@ export class Geo {
     return dst;
   }
 
-  public static pathWalk2D(
-    points: IPoint2D[],
-    length: number,
-  ): IPoint2D | null {
+  public static pathWalk2D(points: IPoint2D[], length: number): IPoint2D | null {
     //Neu
     var dst = 0;
     var p1, p2;
@@ -133,12 +130,7 @@ export class Geo {
 		checks for situation
 		p1 ---- p2 --- p3 colinear
 	*/
-  public static isCloseBetween(
-    p1: IPoint2D,
-    p2: IPoint2D,
-    p3: IPoint2D,
-    err: number,
-  ): boolean {
+  public static isCloseBetween(p1: IPoint2D, p2: IPoint2D, p3: IPoint2D, err: number): boolean {
     Point2D.sub(p3, p1, this.p1p3);
     Point2D.rotate90(Geo.p1p3, this.n);
     Point2D.normalize(this.n, 1, this.n);
@@ -149,11 +141,7 @@ export class Geo {
     const b = 0 <= Math.abs(beta) && Math.abs(beta) <= err;
     return a && b;
   }
-  public static getOrthogonalDistance(
-    p1: IPoint2D,
-    p2: IPoint2D,
-    p3: IPoint2D,
-  ): number {
+  public static getOrthogonalDistance(p1: IPoint2D, p2: IPoint2D, p3: IPoint2D): number {
     Point2D.sub(p3, p1, this.p1p3);
     Point2D.rotate90(Geo.p1p3, this.n);
     Point2D.normalize(this.n, 1, this.n);
@@ -209,10 +197,7 @@ export class Geo {
       if (a == false) return false;
     }
 
-    return (
-      Geo.isCloseParallel(p1, p2, p3, p4, err) ||
-      Geo.isCloseParallel(p1, p2, p4, p3, err)
-    );
+    return Geo.isCloseParallel(p1, p2, p3, p4, err) || Geo.isCloseParallel(p1, p2, p4, p3, err);
   }
   //added 15.9.18
   private static p1p2 = Algebra.createPoint2D(0, 0);
@@ -245,11 +230,7 @@ export class Geo {
   /**
    * TODO result pattern
    */
-  public static pointBetween(
-    p1: IPoint2D,
-    p2: IPoint2D,
-    distance: number,
-  ): IPoint2D {
+  public static pointBetween(p1: IPoint2D, p2: IPoint2D, distance: number): IPoint2D {
     Point2D.sub(p2, p1, this.vec1);
     Point2D.mul(this.vec1, distance / Point2D.size(this.vec1), this.vec2);
     return Point2D.add(p1, this.vec2);
@@ -364,22 +345,11 @@ export class Geo {
   private static p_relative_1 = Algebra.createPoint2D();
   private static p_relative_3 = Algebra.createPoint2D();
   private static linesIntersect_result = Algebra.createPoint2D();
-  public static linesIntersect(
-    p1: IPoint2D,
-    p2: IPoint2D,
-    p3: IPoint2D,
-    p4: IPoint2D,
-  ): boolean {
+  public static linesIntersect(p1: IPoint2D, p2: IPoint2D, p3: IPoint2D, p4: IPoint2D): boolean {
     Point2D.sub(p2, p1, Geo.p1p2);
     Point2D.sub(p4, p3, Geo.p3p4);
 
-    var res = Geo.intersectionLines(
-      p1,
-      Geo.p1p2,
-      p3,
-      Geo.p3p4,
-      this.linesIntersect_result,
-    );
+    var res = Geo.intersectionLines(p1, Geo.p1p2, p3, Geo.p3p4, this.linesIntersect_result);
 
     if (res == 'PARRALLEL') return false;
     var p = this.linesIntersect_result;
@@ -414,12 +384,7 @@ export class Geo {
   /**
 		???
 	 */
-  public static linesIntersect2(
-    p1: IPoint2D,
-    p2: IPoint2D,
-    p3: IPoint2D,
-    p4: IPoint2D,
-  ): boolean {
+  public static linesIntersect2(p1: IPoint2D, p2: IPoint2D, p3: IPoint2D, p4: IPoint2D): boolean {
     var alpha, beta;
 
     var term1 = p4.y - p3.y - p2.y + p1.y;
@@ -472,10 +437,7 @@ export class Geo {
     beta: number,
     c: IPoint2D,
   ): IPoint2D {
-    return Point2D.add(
-      Point2D.add(a, Point2D.mul(b, alpha)),
-      Point2D.mul(c, beta),
-    );
+    return Point2D.add(Point2D.add(a, Point2D.mul(b, alpha)), Point2D.mul(c, beta));
   }
 
   public static solve_p_eq_a_add_X_x_b_add_Y_x_c(
@@ -545,12 +507,7 @@ export class Geo {
     return result;
   }
 
-  public static triangleContainsP(
-    p1: IPoint2D,
-    p2: IPoint2D,
-    p3: IPoint2D,
-    p: IPoint2D,
-  ) {
+  public static triangleContainsP(p1: IPoint2D, p2: IPoint2D, p3: IPoint2D, p: IPoint2D) {
     return this.triangleContains(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p.x, p.y);
   }
 
@@ -675,11 +632,7 @@ export class Geo {
     }
     return false;
   }
-  public static polyContains(
-    points: IPoint2D[],
-    p: IPoint2D,
-    points2?: IPoint2D[],
-  ): boolean {
+  public static polyContains(points: IPoint2D[], p: IPoint2D, points2?: IPoint2D[]): boolean {
     if (!points2) {
       points2 = this.polyLineIntersections(points, p.y);
     }

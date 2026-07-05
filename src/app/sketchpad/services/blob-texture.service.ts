@@ -7,17 +7,11 @@ export class BlobTextureService {
     return createImageBitmap(canvas);
   }
 
-  async blobToImage(
-    blob: Blob,
-    { width, height }: IBoundsSize,
-  ): Promise<ImageBitmap> {
+  async blobToImage(blob: Blob, { width, height }: IBoundsSize): Promise<ImageBitmap> {
     return await createImageBitmap(blob);
   }
 
-  async blobToCanvas(
-    blob: Blob,
-    { width, height }: IBoundsSize,
-  ): Promise<HTMLCanvasElement> {
+  async blobToCanvas(blob: Blob, { width, height }: IBoundsSize): Promise<HTMLCanvasElement> {
     const img = await createImageBitmap(blob);
     const canvas = document.createElement('canvas');
     canvas.width = width;
@@ -30,9 +24,7 @@ export class BlobTextureService {
     const url = URL.createObjectURL(blob);
     const image = document.createElement('img');
 
-    const loaded = new Promise<void>(
-      (resolve) => (image.onload = () => resolve()),
-    );
+    const loaded = new Promise<void>((resolve) => (image.onload = () => resolve()));
     image.src = url;
     await loaded;
 
@@ -56,9 +48,7 @@ export class BlobTextureService {
     canvas.height = newHeight;
     const ctx = canvas.getContext('2d');
     ctx.drawImage(image, 0, 0, newWidth, newHeight);
-    const result = await new Promise<Blob>((r) =>
-      canvas.toBlob((blob) => r(blob), blob.type),
-    );
+    const result = await new Promise<Blob>((r) => canvas.toBlob((blob) => r(blob), blob.type));
     URL.revokeObjectURL(url);
     return result;
   }

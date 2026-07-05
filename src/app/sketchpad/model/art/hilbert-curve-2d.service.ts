@@ -38,9 +38,7 @@ export class HilbertCurve2DService {
 
       const start3 = start2 + segmentLength;
       this.curve2d(order - 1, points, start3, segmentLength);
-      points.map(start3, segmentLength, (p) =>
-        Point2D.addXY(p, lineLength, lineLength),
-      );
+      points.map(start3, segmentLength, (p) => Point2D.addXY(p, lineLength, lineLength));
 
       const start4 = start3 + segmentLength;
       this.curve2d(order - 1, points, start4, segmentLength);

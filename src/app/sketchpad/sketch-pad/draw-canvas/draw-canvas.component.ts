@@ -55,9 +55,7 @@ export class DrawCanvasComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ready = new ReadyResource<true>();
 
-  memento = new Memento<ISketchAction>((change, type) =>
-    this.handleChange(change, type),
-  );
+  memento = new Memento<ISketchAction>((change, type) => this.handleChange(change, type));
 
   private subs: TempSubscriber;
   private backupPopState: (this: WindowEventHandlers, ev: PopStateEvent) => any;
@@ -83,9 +81,7 @@ export class DrawCanvasComponent implements OnInit, AfterViewInit, OnDestroy {
     const canvas: HTMLCanvasElement = this.canvasRef.nativeElement;
     const size = canvas.getBoundingClientRect();
     if (!this.source) {
-      this.blobTextureService
-        .canvasToImageBitmap(canvas)
-        .then((bitmap) => (this.source = bitmap));
+      this.blobTextureService.canvasToImageBitmap(canvas).then((bitmap) => (this.source = bitmap));
     }
     this.ready.resolve(true);
   }
@@ -111,9 +107,7 @@ export class DrawCanvasComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.resetSource();
       const history = this.memento.getChangesUntil(change);
-      history.forEach((change) =>
-        change.forEach((item) => this.drawPoint(item)),
-      );
+      history.forEach((change) => change.forEach((item) => this.drawPoint(item)));
     }
   }
 

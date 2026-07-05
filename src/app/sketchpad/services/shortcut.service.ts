@@ -28,10 +28,7 @@ export class ShortcutService {
       } else if (evt.key.toLocaleLowerCase() === 's') {
         this.ctrlS.next(null);
         evt.preventDefault();
-      } else if (
-        evt.key.toLocaleLowerCase() === 'control' &&
-        !this.ctrl.getValue()
-      ) {
+      } else if (evt.key.toLocaleLowerCase() === 'control' && !this.ctrl.getValue()) {
         this.ctrl.next(true);
       }
     }

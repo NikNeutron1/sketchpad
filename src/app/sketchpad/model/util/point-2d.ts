@@ -8,48 +8,28 @@ export class Point2D {
     return Algebra.createPoint2D(p.x, p.y);
   }
 
-  static add(
-    p1: IPoint2D,
-    p2: IPoint2D,
-    target = Algebra.createPoint2D(),
-  ): IPoint2D {
+  static add(p1: IPoint2D, p2: IPoint2D, target = Algebra.createPoint2D()): IPoint2D {
     target.x = p1.x + p2.x;
     target.y = p1.y + p2.y;
     return target;
   }
 
-  static addAll(
-    points: IPoint2D[],
-    target = Algebra.createPoint2D(),
-  ): IPoint2D {
+  static addAll(points: IPoint2D[], target = Algebra.createPoint2D()): IPoint2D {
     return points.reduce((sum, p) => this.add(sum, p, sum), target);
   }
 
-  static addXY(
-    p1: IPoint2D,
-    x: number,
-    y: number,
-    target = Algebra.createPoint2D(),
-  ): IPoint2D {
+  static addXY(p1: IPoint2D, x: number, y: number, target = Algebra.createPoint2D()): IPoint2D {
     target.x = p1.x + x;
     target.y = p1.y + y;
     return target;
   }
 
-  static sub(
-    p1: IPoint2D,
-    p2: IPoint2D,
-    target = Algebra.createPoint2D(),
-  ): IPoint2D {
+  static sub(p1: IPoint2D, p2: IPoint2D, target = Algebra.createPoint2D()): IPoint2D {
     target.x = p1.x - p2.x;
     target.y = p1.y - p2.y;
     return target;
   }
-  static mul(
-    p: IPoint2D,
-    m: number,
-    target = Algebra.createPoint2D(),
-  ): IPoint2D {
+  static mul(p: IPoint2D, m: number, target = Algebra.createPoint2D()): IPoint2D {
     target.x = p.x * m;
     target.y = p.y * m;
     return target;
@@ -83,20 +63,12 @@ export class Point2D {
     return target;
   }
 
-  static normalize(
-    vec: IPoint2D,
-    length = 1.0,
-    target = Algebra.createPoint2D(),
-  ): IPoint2D {
+  static normalize(vec: IPoint2D, length = 1.0, target = Algebra.createPoint2D()): IPoint2D {
     const size = Point2D.size(vec);
     return this.mul(vec, length / size, target);
   }
 
-  static rotate(
-    p: IPoint2D,
-    deg: number,
-    target = Algebra.createPoint2D(),
-  ): IPoint2D {
+  static rotate(p: IPoint2D, deg: number, target = Algebra.createPoint2D()): IPoint2D {
     const alpha = (deg * 2 * Math.PI) / 360;
     const px = p.x;
     const py = p.y;
@@ -203,11 +175,7 @@ export class Point2D {
     return 'x' in value && 'y' in value && Object.keys(value).length <= 4;
   }
 
-  public static floor(
-    p: IPoint2D,
-    digits = 0,
-    result = Algebra.createPoint2D(),
-  ): IPoint2D {
+  public static floor(p: IPoint2D, digits = 0, result = Algebra.createPoint2D()): IPoint2D {
     const ten = Math.pow(10, digits);
     result.x = Math.floor(p.x * ten) / ten;
     result.y = Math.floor(p.y * ten) / ten;
