@@ -12,6 +12,7 @@ import { DrawCanvasComponent } from './sketch-pad/draw-canvas/draw-canvas.compon
 import { SketchPadComponent } from './sketch-pad/sketch-pad.component';
 import { DetailsComponent } from './sketch-pad/details/details.component';
 import { MementoComponent } from './sketch-pad/memento/memento.component';
+import { HeartbeatComponent } from '../heartbeat/heartbeat/heartbeat.component';
 
 window['madeby'] = () => console.log('lukas huhn');
 
@@ -29,6 +30,7 @@ window['madeby'] = () => console.log('lukas huhn');
     DrawCanvasComponent,
     DetailsComponent,
     MementoComponent,
+    HeartbeatComponent,
   ],
   exports: [],
 })
