@@ -110,11 +110,11 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
       brigthness: [0.5],
     },
     default: {
-      speeds: [7, 8, 5, 2],
+      speeds: [17, 21, 14],
       brigthness: [1],
-      spawnPos: [0, 0, 0, 4, 0, 4, 0],
       widths: [5],
-      directions: ['EW'],
+      directions: ['EW', 'EW', 'EW', 'EW', 'E', 'E', 'W', 'W'],
+      spawnPos: [0, 0, 4, 0, 4, 0, 0, 4],
     },
     out: {
       speeds: [5],
@@ -162,18 +162,18 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
 
     if (
       this.lastPointerDown &&
-      Date.now() > this.lastPointerDown + this.longPressedThreshold 
-      && this.recording 
-      && !this.recording.isPlaying
+      Date.now() > this.lastPointerDown + this.longPressedThreshold &&
+      this.recording &&
+      !this.recording.isPlaying
     ) {
       this.lastPointerDown = null;
       this.recording.isPlaying = true;
       this.recording.t_end = Date.now();
     } else if (
       this.lastPointerDown &&
-      Date.now() > this.lastPointerDown + this.longPressedThreshold 
-      && !this.recording
-      && !this.currentSignal 
+      Date.now() > this.lastPointerDown + this.longPressedThreshold &&
+      !this.recording &&
+      !this.currentSignal
     ) {
       this.lastPointerDown = null;
       this.currentSignal = {
@@ -229,7 +229,7 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
 
     const lastWave = this.waves.length && this.waves[this.waves.length - 2];
     const speedWave = lastWave && Date.now() - lastWave.t0 < this.speedThreshold;
-    if (speedWave) {
+    if (speedWave && false) {
       const { spawnPos, speeds, directions, brigthness } = this.settings.speed;
       lastWave.direction = getByCounter(directions, counter - 1);
       lastWave.brigthness = getByCounter(brigthness);
@@ -239,8 +239,9 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
     }
 
     if (
-      (wave.spawnPos <= 0 && wave.direction === 'W') ||
-      (wave.spawnPos >= 4 && wave.direction === 'E')
+      false &&
+      ((wave.spawnPos <= 0 && wave.direction === 'W') ||
+        (wave.spawnPos >= 4 && wave.direction === 'E'))
     ) {
       wave.speed = getByCounter(this.settings.out.speeds);
       wave.width = getByCounter(this.settings.out.widths);
@@ -267,7 +268,7 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
 
     if (this.recording) {
       this.recording.waves.push(wave);
-      this.recording.wavesBg.push(waveBg);
+      waveBg && this.recording.wavesBg.push(waveBg);
     }
 
     if (this.recording && this.recording.isPlaying) {
@@ -303,17 +304,17 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
       const dtTotal = now - t0;
       const numLoops = Math.floor(dtTotal / dtRecording);
       const percentageTime = dtTotal / dtRecording - numLoops;
-      waves = this.recording.waves.map(wave => ({
+      waves = this.recording.waves.map((wave) => ({
         ...wave,
-        t0: numLoops * dtRecording + wave.t0
+        t0: numLoops * dtRecording + wave.t0,
       }));
-      /*wavesBg = this.recording.wavesBg.map(waveBg => ({
+      wavesBg = this.recording.wavesBg.map((waveBg) => ({
         ...waveBg,
         wave: {
           ...waveBg.wave,
-          t0: waveBg.wave.t0 - 
-        }
-      }));*/
+          t0: numLoops * dtRecording + waveBg.wave.t0,
+        },
+      }));
     }
     this.lights.forEach((light) => {
       const maxWaveValue = waves.reduce((_max, wave) => {

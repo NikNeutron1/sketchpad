@@ -13,6 +13,7 @@ import { SketchPadComponent } from './sketch-pad/sketch-pad.component';
 import { DetailsComponent } from './sketch-pad/details/details.component';
 import { MementoComponent } from './sketch-pad/memento/memento.component';
 import { HeartbeatComponent } from '../heartbeat/heartbeat/heartbeat.component';
+import { RecordingGraphComponent } from '../heartbeat/recording-graph/recording-graph.component';
 
 window['madeby'] = () => console.log('lukas huhn');
 
@@ -31,6 +32,7 @@ window['madeby'] = () => console.log('lukas huhn');
     DetailsComponent,
     MementoComponent,
     HeartbeatComponent,
+    RecordingGraphComponent,
   ],
   exports: [],
 })
