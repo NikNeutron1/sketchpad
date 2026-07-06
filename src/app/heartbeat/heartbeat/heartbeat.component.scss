@@ -1,0 +1,103 @@
+.container {
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
+
+  grid-template-areas:
+    'north north north'
+    'west  center east'
+    'south south south';
+
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+
+  box-sizing: border-box;
+  background-color: rgb(0, 0, 0);
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  --border: 1px solid rgb(255, 255, 255);
+}
+
+/*
+.flex-container > div:nth-child(odd) {
+  background-color: #d3d3d3;
+}
+.flex-container > div:nth-child(even) {
+  background-color: #a9a9a9;
+}
+*/
+
+.flex-container > div {
+  color: white;
+  position: relative;
+  border: 1px solid black;
+  box-sizing: border-box;
+  width: 35px;
+}
+
+.flex-container > div > .light {
+  --light-size: 120px;
+
+  --light-color-raw: 0, 229, 255;
+  --light-color: rgb(255, 0, 208);
+  --light-color-cyan: rgb(0, 229, 255);
+  --light-color-white: rgb(255, 255, 255);
+  --fade-profile: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --light-level: 1;
+
+  position: absolute;
+  top: calc(50% - (var(--light-size) / 2));
+  left: calc(50% - (var(--light-size) / 2));
+  width: var(--light-size);
+  height: var(--light-size);
+  border-radius: 100%;
+  z-index: 0;
+
+  /* Fixed: Using the raw variable and stretching the transparent stop to 100% so it doesn't clip */
+  background: radial-gradient(
+    circle,
+    rgba(var(--light-color-raw), var(--light-level)) 0%,
+    rgba(var(--light-color-raw), 0) 70%
+  );
+}
+
+.flex-container > button {
+  z-index: 1;
+  cursor: pointer;
+  width: 76px;
+  height: 76px;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+  background: linear-gradient(145deg, #2c2c35, #1e1e24);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+/* HOVER STATE: Gentle lighting lift */
+.flex-container > button:hover {
+  background: linear-gradient(145deg, #353540, #222229);
+  box-shadow:
+    0 6px 15px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+
+/* ACTIVE STATE: Subtle click down */
+.flex-container > button:active {
+  transform: translateY(2px) scale(0.98);
+  background: linear-gradient(145deg, #1e1e24, #1a1a1f);
+  box-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.5),
+    inset 0 1px 3px rgba(0, 0, 0, 0.4);
+}

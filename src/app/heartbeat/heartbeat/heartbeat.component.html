@@ -1,7 +1,20 @@
-<div style="padding: 15px">
-  <ng-container *ngFor="let light of lights">
-    <div>
-      {{ light.x }}
-    </div>
-  </ng-container>
+<div class="container">
+  <div style="grid-area: north"></div>
+  <div style="grid-area: east"></div>
+  <div style="grid-area: west"></div>
+  <div class="flex-container" style="grid-area: center">
+    <ng-container *ngFor="let light of lights">
+      <button
+        *ngIf="light.right"
+        (pointerdown)="handleMouseDown($event)"
+        (pointerup)="handleMouseUp($event)"
+      ></button>
+      <div>
+        <div class="light" [style.--light-level]="light.level"></div>
+        <!-- {{ light.index }} -->
+        {{ light.x }}
+      </div>
+    </ng-container>
+  </div>
+  <div style="grid-area: south"></div>
 </div>
