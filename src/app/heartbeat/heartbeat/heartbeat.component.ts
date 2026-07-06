@@ -166,9 +166,9 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
       this.recording &&
       !this.recording.isPlaying
     ) {
+      this.recording.t_end = this.lastPointerDown;
       this.lastPointerDown = null;
       this.recording.isPlaying = true;
-      this.recording.t_end = Date.now();
     } else if (
       this.lastPointerDown &&
       Date.now() > this.lastPointerDown + this.longPressedThreshold &&
