@@ -21,6 +21,7 @@ export interface ILight {
   gpPin: 0;
   level: number; // 0 bis 1
   right?: boolean;
+  colorRaw: '255, 0, 208' | '0, 229, 255' | '0, 77, 208';
 }
 
 export interface IRecording {
@@ -28,6 +29,11 @@ export interface IRecording {
   waves: IWave[];
   wavesBg: IBackgroundWave[];
   isPlaying: boolean;
+}
+
+export interface ILoopRun {
+  waves: IWave[];
+  wavesBg: IBackgroundWave[];
 }
 
 export interface ISignalRyhtm {
@@ -60,14 +66,6 @@ export class Device {
   styleUrls: ['./heartbeat.component.scss'],
 })
 export class HeartbeatComponent implements OnInit, OnDestroy {
-  lights: ILight[] = ArrayUtils.range(14).map((index) => ({
-    index,
-    x: index - 5,
-    right: index === 5,
-    gpPin: 0,
-    level: 0.2,
-  }));
-
   devices: Device[] = [
     new Device(
       'Marci',
@@ -77,9 +75,38 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
         right: index === 3,
         gpPin: 0,
         level: 0.2,
+        colorRaw: '0, 229, 255',
       })),
       {
         color: 'Aqua',
+      },
+    ),
+    new Device(
+      'Lukas',
+      ArrayUtils.range(14).map((index) => ({
+        index,
+        x: index - 5,
+        right: index === 5,
+        gpPin: 0,
+        level: 0.2,
+        colorRaw: '255, 0, 208',
+      })),
+      {
+        color: 'DeepPink',
+      },
+    ),
+    new Device(
+      'Asul',
+      ArrayUtils.range(8).map((index) => ({
+        index,
+        x: index - 4,
+        right: index === 4,
+        gpPin: 0,
+        level: 0.2,
+        colorRaw: '0, 77, 208',
+      })),
+      {
+        color: 'DeepPink',
       },
     ),
   ];
@@ -227,44 +254,21 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
       direction: getByCounter(directions),
     };
 
-    const lastWave = this.waves.length && this.waves[this.waves.length - 2];
-    const speedWave = lastWave && Date.now() - lastWave.t0 < this.speedThreshold;
-    if (speedWave && false) {
-      const { spawnPos, speeds, directions, brigthness } = this.settings.speed;
-      lastWave.direction = getByCounter(directions, counter - 1);
-      lastWave.brigthness = getByCounter(brigthness);
-      wave.direction = getByCounter(directions);
-      wave.spawnPos = getByCounter(spawnPos);
-      wave.speed = getByCounter(speeds);
-    }
-
-    if (
-      false &&
-      ((wave.spawnPos <= 0 && wave.direction === 'W') ||
-        (wave.spawnPos >= 4 && wave.direction === 'E'))
-    ) {
-      wave.speed = getByCounter(this.settings.out.speeds);
-      wave.width = getByCounter(this.settings.out.widths);
-    }
-
     this.waves.push(wave);
 
-    const backgroundOn = !speedWave;
     let waveBg: IBackgroundWave = null;
-    if (backgroundOn && wave.spawnPos === 0) {
-      waveBg = {
-        wave,
-        keyFrames: [
-          { dt: 0, level: 0.22 },
-          { dt: 1, level: 0.22 },
-          { dt: 1_000, level: 0.22 },
-          { dt: 2_000, level: 0.2 },
-          { dt: 6_000, level: 0.1 },
-          { dt: 10_000, level: 0 },
-        ],
-      };
-      this.backgroundWaves.push(waveBg);
-    }
+    waveBg = {
+      wave,
+      keyFrames: [
+        { dt: 0, level: 0.22 },
+        { dt: 1, level: 0.22 },
+        { dt: 1_000, level: 0.22 },
+        { dt: 2_000, level: 0.2 },
+        { dt: 6_000, level: 0.1 },
+        { dt: 10_000, level: 0 },
+      ],
+    };
+    this.backgroundWaves.push(waveBg);
 
     if (this.recording) {
       this.recording.waves.push(wave);
@@ -276,6 +280,40 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
     }
 
     // console.log(this.waves);
+  }
+
+  toLoopRun(device: Device, recording: IRecording): ILoopRun {
+    const w0 = this.recording.waves[0];
+    const t0 = w0.t0;
+    const dtRecording = this.recording.t_end - t0;
+    const now = Date.now();
+    const dtTotal = now - t0;
+    const numLoops = Math.floor(dtTotal / dtRecording);
+    const percentageTime = dtTotal / dtRecording - numLoops;
+
+    function mapTime(device: Device, time: number): number {
+      if (device.name === 'Lukas') {
+        return time;
+      }
+      if (time < t0 + dtRecording / 2) {
+        return time + dtRecording / 2;
+      }
+      return time - dtRecording / 2;
+    }
+
+    return {
+      waves: this.recording.waves.map((wave) => ({
+        ...wave,
+        t0: numLoops * dtRecording + mapTime(device, wave.t0),
+      })),
+      wavesBg: this.recording.wavesBg.map((waveBg) => ({
+        ...waveBg,
+        wave: {
+          ...waveBg.wave,
+          t0: numLoops * dtRecording + mapTime(device, waveBg.wave.t0),
+        },
+      })),
+    };
   }
 
   render() {
@@ -296,39 +334,27 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
     }
     let waves = this.waves;
     let wavesBg = this.backgroundWaves;
-    if (this.recording && this.recording.isPlaying && this.recording.waves.length) {
-      const w0 = this.recording.waves[0];
-      const t0 = w0.t0;
-      const dtRecording = this.recording.t_end - t0;
-      const now = Date.now();
-      const dtTotal = now - t0;
-      const numLoops = Math.floor(dtTotal / dtRecording);
-      const percentageTime = dtTotal / dtRecording - numLoops;
-      waves = this.recording.waves.map((wave) => ({
-        ...wave,
-        t0: numLoops * dtRecording + wave.t0,
-      }));
-      wavesBg = this.recording.wavesBg.map((waveBg) => ({
-        ...waveBg,
-        wave: {
-          ...waveBg.wave,
-          t0: numLoops * dtRecording + waveBg.wave.t0,
-        },
-      }));
-    }
-    this.lights.forEach((light) => {
-      const maxWaveValue = waves.reduce((_max, wave) => {
-        const current = this.calcWave(light, wave);
-        return Math.max(current, _max);
-      }, 0);
-      const maxWaveBgValue = wavesBg.reduce((_max, wave) => {
-        const current = this.calcWaveBackground(light, wave);
-        return Math.max(current, _max);
-      }, 0);
-      light.level = Math.max(maxWaveValue, maxWaveBgValue);
-      if (this.currentSignal) {
-        light.level = globalLevel;
+
+    this.devices.forEach((device) => {
+      if (this.recording && this.recording.isPlaying && this.recording.waves.length) {
+        const run = this.toLoopRun(device, this.recording);
+        waves = run.waves;
+        wavesBg = run.wavesBg;
       }
+      device.lights.forEach((light) => {
+        const maxWaveValue = waves.reduce((_max, wave) => {
+          const current = this.calcWave(light, wave);
+          return Math.max(current, _max);
+        }, 0);
+        const maxWaveBgValue = wavesBg.reduce((_max, wave) => {
+          const current = this.calcWaveBackground(light, wave);
+          return Math.max(current, _max);
+        }, 0);
+        light.level = Math.max(maxWaveValue, maxWaveBgValue);
+        if (this.currentSignal) {
+          light.level = globalLevel;
+        }
+      });
     });
   }
 
@@ -336,10 +362,12 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
     const waves = this.waves.filter(
       (wave) =>
         Date.now() - wave.t0 < 1000 ||
-        this.lights.some((light) => {
-          const { east, west } = this.intersectsWave(light, wave, Date.now());
-          return east || west;
-        }),
+        this.devices.some((device) =>
+          device.lights.some((light) => {
+            const { east, west } = this.intersectsWave(light, wave, Date.now());
+            return east || west;
+          }),
+        ),
     );
     this.waves.length = 0;
     this.waves.push(...waves);

@@ -13,16 +13,14 @@
 >
   <ng-container *ngFor="let waveSpike of waveSpikes">
     <div
-      style="
-        position: absolute;
-        height: 10px;
-        width: 10px;
-        border-radius: 2px;
-        background-color: orange;
-        box-sizing: border-box;
-      "
+      *ngIf="waveSpike.wave.direction.includes('E')"
+      class="wave-base wave-e"
       [style.left]="waveSpike.timePercentage * 100 + '%'"
-      [style.top]="waveSpike.top + 'px'"
+    ></div>
+    <div
+      *ngIf="waveSpike.wave.direction.includes('W')"
+      class="wave-base wave-w"
+      [style.left]="waveSpike.timePercentage * 100 + '%'"
     ></div>
   </ng-container>
 
@@ -31,7 +29,12 @@
     [style.left]="getCurrenTimePercentage() * 100 + '%'"
   ></div>
 
-  <div style="color: white; margin-top: 50px">
+  <div
+    style="position: absolute; top: 0px; height: 50px; border: 1px solid white"
+    [style.left]="getCurrenTimePercentage(2) * 100 + '%'"
+  ></div>
+
+  <div style="color: white; margin-top: 50px" *ngIf="recording && recording.isPlaying">
     {{ getTime().now }} / {{ getTime().dtRecording }}
   </div>
 </div>

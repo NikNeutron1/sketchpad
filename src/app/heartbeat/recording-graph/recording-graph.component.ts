@@ -10,7 +10,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { IRecording } from '../heartbeat/heartbeat.component';
+import { IRecording, IWave } from '../heartbeat/heartbeat.component';
 
 @Component({
   selector: 'app-recording-graph',
@@ -24,7 +24,7 @@ export class RecordingGraphComponent implements OnInit, OnDestroy {
   @Input()
   recording: IRecording = null;
 
-  waveSpikes: { timePercentage: number; top: number }[] = [];
+  waveSpikes: { timePercentage: number; wave: IWave }[] = [];
 
   private animationFrameId: number | null = null;
 
@@ -66,12 +66,11 @@ export class RecordingGraphComponent implements OnInit, OnDestroy {
     const tn = this.recording.t_end ?? Date.now();
     this.waveSpikes = this.recording.waves.map((wave) => ({
       timePercentage: (wave.t0 - t0) / (tn - t0),
-      top:
-        wave.direction === 'EW' ? 20 : wave.direction === 'E' ? 5 : wave.direction === 'W' ? 35 : 0,
+      wave,
     }));
   }
 
-  getCurrenTimePercentage(): number {
+  getCurrenTimePercentage(val = 0): number {
     if (!this.recording || !this.recording.waves.length) {
       return 0;
     }
@@ -81,6 +80,9 @@ export class RecordingGraphComponent implements OnInit, OnDestroy {
     const dtTotal = now - t0Recording;
     const loops = Math.floor(dtTotal / dtRecording);
     const timePercentage = dtTotal / dtRecording - loops;
+    if (val) {
+      return timePercentage <= 0.5 ? 0.5 + timePercentage : timePercentage - 0.5;
+    }
     return timePercentage;
   }
 

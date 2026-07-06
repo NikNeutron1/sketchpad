@@ -2,21 +2,30 @@
   <div style="grid-area: north"></div>
   <div style="grid-area: east"></div>
   <div style="grid-area: west"></div>
-  <div class="flex-container" style="grid-area: center">
-    <ng-container *ngFor="let light of lights">
-      <button
-        *ngIf="light.right"
-        (pointerdown)="handleMouseDown($event)"
-        (pointerup)="handleMouseUp($event)"
-      ></button>
-      <div>
-        <div class="light" [style.--light-level]="light.level"></div>
-        <!-- {{ light.index }} -->
-        {{ light.x }}
+  <div style="grid-area: center; display: flex; flex-direction: column; gap: 50px">
+    <ng-container *ngFor="let device of devices">
+      <div class="flex-container">
+        <ng-container *ngFor="let light of device.lights">
+          <button
+            *ngIf="light.right"
+            (pointerdown)="handleMouseDown($event)"
+            (pointerup)="handleMouseUp($event)"
+          ></button>
+          <div>
+            <div
+              class="light"
+              [style.--light-level]="light.level"
+              [style.--light-color-raw]="light.colorRaw"
+            ></div>
+            <!-- {{ light.index }} -->
+            {{ light.x }}
+          </div>
+        </ng-container>
       </div>
     </ng-container>
   </div>
   <div style="grid-area: south">
+    <br />
     <app-recording-graph [recording]="recording"></app-recording-graph>
   </div>
 </div>
