@@ -23,6 +23,21 @@ export interface ILight {
   right?: boolean;
 }
 
+export interface IRecording {
+  t_end: number;
+  waves: IWave[];
+  wavesBg: IBackgroundWave[];
+  isPlaying: boolean;
+}
+
+export interface ISignalRyhtm {
+  t0: number;
+  dt1_blink_1_start: number;
+  dt2_blink_1_end: number;
+  dt3_blink_2_start: number;
+  dt4_blink_2_end: number;
+}
+
 type IDeviceOptions = { color: string } | { colors: string[] };
 export class Device {
   constructor(
@@ -89,8 +104,8 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
     }>;
   } = {
     speed: {
-      directions: ['E', 'W'],
-      spawnPos: [0],
+      directions: ['E', 'E', 'W', 'W'],
+      spawnPos: [4, 0, 0, 4],
       speeds: [8],
       brigthness: [0.5],
     },
@@ -106,6 +121,13 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
       widths: [3.5],
     },
   };
+
+  lastPointerDown: number = 0;
+  lastPointerUp: number = 0;
+
+  longPressedThreshold = 1000;
+
+  currentSignal: ISignalRyhtm;
 
   constructor(
     private ngZone: NgZone,
@@ -128,12 +150,45 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
 
   counterLoops = 0;
 
+  recording: IRecording = null;
+
   private loop = () => {
     // 2. Perform your calculations
     this.render();
 
     if (this.counterLoops++ % 200 === 0) {
       this.cleanup();
+    }
+
+    if (
+      this.lastPointerDown &&
+      Date.now() > this.lastPointerDown + this.longPressedThreshold 
+      && this.recording 
+      && !this.recording.isPlaying
+    ) {
+      this.lastPointerDown = null;
+      this.recording.isPlaying = true;
+      this.recording.t_end = Date.now();
+    } else if (
+      this.lastPointerDown &&
+      Date.now() > this.lastPointerDown + this.longPressedThreshold 
+      && !this.recording
+      && !this.currentSignal 
+    ) {
+      this.lastPointerDown = null;
+      this.currentSignal = {
+        t0: Date.now(),
+        dt1_blink_1_start: 200 * 1,
+        dt2_blink_1_end: 200 * 2,
+        dt3_blink_2_start: 200 * 3,
+        dt4_blink_2_end: 200 * 4,
+      };
+      this.recording = {
+        t_end: null,
+        waves: [],
+        wavesBg: [],
+        isPlaying: false,
+      };
     }
 
     // 3. Manually tell Angular to update the DOM for this specific component
@@ -143,11 +198,21 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
     this.animationFrameId = requestAnimationFrame(this.loop);
   };
 
-  handleMouseUp($event: PointerEvent) {}
+  handleMouseUp($event: PointerEvent) {
+    const lastPointerDown = this.lastPointerDown;
+    this.lastPointerUp = Date.now();
+    this.lastPointerDown = null;
+
+    if (this.lastPointerUp - lastPointerDown >= this.longPressedThreshold) {
+      // play loop
+    }
+  }
 
   counter = 0;
 
   handleMouseDown($event: PointerEvent) {
+    this.lastPointerDown = Date.now();
+
     const counter = this.counter++;
     const { spawnPos, speeds, widths, directions, brigthness } = this.settings.default;
     const getByCounter: <T>(arr: T[], counter?: number) => T = (arr, counter = this.counter) => {
@@ -184,35 +249,85 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
     this.waves.push(wave);
 
     const backgroundOn = !speedWave;
+    let waveBg: IBackgroundWave = null;
     if (backgroundOn && wave.spawnPos === 0) {
-      this.backgroundWaves.push({
+      waveBg = {
         wave,
         keyFrames: [
-          { dt: 0, level: 0.5 },
-          { dt: 1, level: 0.5 },
-          { dt: 1_000, level: 0.4 },
-          { dt: 2_000, level: 0.3 },
-          { dt: 3_000, level: 0.2 },
-          { dt: 4_000, level: 0.1 },
-          { dt: 5_000, level: 0 },
+          { dt: 0, level: 0.22 },
+          { dt: 1, level: 0.22 },
+          { dt: 1_000, level: 0.22 },
+          { dt: 2_000, level: 0.2 },
+          { dt: 6_000, level: 0.1 },
+          { dt: 10_000, level: 0 },
         ],
-      });
+      };
+      this.backgroundWaves.push(waveBg);
+    }
+
+    if (this.recording) {
+      this.recording.waves.push(wave);
+      this.recording.wavesBg.push(waveBg);
+    }
+
+    if (this.recording && this.recording.isPlaying) {
+      this.recording = null;
     }
 
     // console.log(this.waves);
   }
 
   render() {
+    let globalLevel = 0;
+    if (this.currentSignal) {
+      const { t0, dt1_blink_1_start, dt2_blink_1_end, dt3_blink_2_start, dt4_blink_2_end } =
+        this.currentSignal;
+      const now = Date.now();
+      if (t0 + dt4_blink_2_end < now) {
+        this.currentSignal = null;
+      } else if (t0 + dt3_blink_2_start < now) {
+        globalLevel = 1;
+      } else if (t0 + dt2_blink_1_end < now) {
+        globalLevel = 0;
+      } else if (t0 + dt1_blink_1_start < now) {
+        globalLevel = 1;
+      }
+    }
+    let waves = this.waves;
+    let wavesBg = this.backgroundWaves;
+    if (this.recording && this.recording.isPlaying && this.recording.waves.length) {
+      const w0 = this.recording.waves[0];
+      const t0 = w0.t0;
+      const dtRecording = this.recording.t_end - t0;
+      const now = Date.now();
+      const dtTotal = now - t0;
+      const numLoops = Math.floor(dtTotal / dtRecording);
+      const percentageTime = dtTotal / dtRecording - numLoops;
+      waves = this.recording.waves.map(wave => ({
+        ...wave,
+        t0: numLoops * dtRecording + wave.t0
+      }));
+      /*wavesBg = this.recording.wavesBg.map(waveBg => ({
+        ...waveBg,
+        wave: {
+          ...waveBg.wave,
+          t0: waveBg.wave.t0 - 
+        }
+      }));*/
+    }
     this.lights.forEach((light) => {
-      const maxWaveValue = this.waves.reduce((_max, wave) => {
+      const maxWaveValue = waves.reduce((_max, wave) => {
         const current = this.calcWave(light, wave);
         return Math.max(current, _max);
       }, 0);
-      const maxWaveBgValue = this.backgroundWaves.reduce((_max, wave) => {
+      const maxWaveBgValue = wavesBg.reduce((_max, wave) => {
         const current = this.calcWaveBackground(light, wave);
         return Math.max(current, _max);
       }, 0);
       light.level = Math.max(maxWaveValue, maxWaveBgValue);
+      if (this.currentSignal) {
+        light.level = globalLevel;
+      }
     });
   }
 
