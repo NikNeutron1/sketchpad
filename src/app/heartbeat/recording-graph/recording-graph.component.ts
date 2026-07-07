@@ -10,7 +10,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { IRecording, IWave } from '../heartbeat/heartbeat.component';
+import { IRecording, IWave } from '../heartbeat/heartbeat.types';
 
 @Component({
   selector: 'app-recording-graph',
@@ -60,6 +60,7 @@ export class RecordingGraphComponent implements OnInit, OnDestroy {
 
   render() {
     if (!this.recording || !this.recording.waves.length) {
+      this.waveSpikes = [];
       return;
     }
     const t0 = this.recording.waves[0].t0;

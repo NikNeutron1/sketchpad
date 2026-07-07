@@ -1,64 +1,52 @@
 import { ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { IHexColor } from 'src/app/sketchpad/model/types';
 import { ArrayUtils } from 'src/app/sketchpad/model/util/ArrayUtils';
+import {
+  BeatClickerDevice,
+  ReclickerDevice,
+  IReclickerID,
+  IWave,
+  IBackgroundWave,
+  ISignalRyhtm,
+  IReclickerLightMapping,
+  IRecording,
+  ILoopRun,
+  ILight,
+} from './heartbeat.types';
 
-export interface IWave {
-  t0: number; // miliseconds
-  speed: number; // light per second
-  spawnPos: number;
-  width: number; // lights
-  brigthness: number;
-  direction: 'E' | 'W' | 'EW';
+const randomWarmColors = [
+  '#ff7300', // Original: Vibrant Orange
+  '#fc9797', // Original: Soft Coral / Pastel Red
+  '#ffb703', // Added: Bright Sun Yellow
+  '#d62828', // Added: Deep Fire Engine Red
+  '#ff4d6d', // Added: Electric Pinkish-Red
+  '#e36414', // Added: Burnt Orange
+  '#9b2226', // Added: Rich Terracotta / Maroon
+];
+const randomWarmColorsRGB = [
+  '255, 115, 0', // #ff7300
+  '252, 151, 151', // #fc9797
+  '255, 183, 3', // #ffb703
+  '214, 40, 40', // #d62828
+  '255, 77, 109', // #ff4d6d
+  '227, 100, 20', // #e36414
+  '155, 34, 38', // #9b2226
+] as const;
+function getRandomWarm(): `${number}, ${number}, ${number}` {
+  const index = Math.floor(Math.random() * randomWarmColors.length);
+  return randomWarmColorsRGB[index];
 }
 
-export interface IBackgroundWave {
-  wave: IWave;
-  keyFrames: Array<{ dt: number; level: number }>;
-}
-
-export interface ILight {
-  index: number;
-  x: number; // integer -7 bis +7
-  gpPin: 0;
-  level: number; // 0 bis 1
-  right?: boolean;
-  colorRaw: '255, 0, 208' | '0, 229, 255' | '0, 77, 208';
-}
-
-export interface IRecording {
-  t_end: number;
-  waves: IWave[];
-  wavesBg: IBackgroundWave[];
-  isPlaying: boolean;
-}
-
-export interface ILoopRun {
-  waves: IWave[];
-  wavesBg: IBackgroundWave[];
-}
-
-export interface ISignalRyhtm {
-  t0: number;
-  dt1_blink_1_start: number;
-  dt2_blink_1_end: number;
-  dt3_blink_2_start: number;
-  dt4_blink_2_end: number;
-}
-
-type IDeviceOptions = { color: string } | { colors: string[] };
-export class Device {
-  constructor(
-    public name: string,
-    public lights: ILight[],
-    public options: IDeviceOptions,
-  ) {}
-  getColor(light: ILight) {
-    if ('color' in this.options) {
-      return this.options.color;
-    } else {
-      return this.options.colors[this.lights.indexOf(light)];
-    }
-  }
-}
+// light maker mobile
+// light razer
+// light instrument / music ligths
+// button entodrum
+// knopf-
+// beat-clicker
+// click-receiver
+// click-spiegel
+// click-replica
+// reclicker
 
 @Component({
   selector: 'app-heartbeat',
@@ -66,43 +54,60 @@ export class Device {
   styleUrls: ['./heartbeat.component.scss'],
 })
 export class HeartbeatComponent implements OnInit, OnDestroy {
-  devices: Device[] = [
-    new Device(
-      'Marci',
+  beatclickers: BeatClickerDevice[] = [
+    new BeatClickerDevice(
+      'BC-1',
+      'PurpleHaze',
       ArrayUtils.range(8).map((index) => ({
         index,
         x: index - 3,
         right: index === 3,
         gpPin: 0,
-        level: 0.2,
+        level: 0,
         colorRaw: '0, 229, 255',
       })),
       {
         color: 'Aqua',
       },
     ),
-    new Device(
-      'Lukas',
+    new BeatClickerDevice(
+      'BC-2',
+      'Rose',
       ArrayUtils.range(14).map((index) => ({
         index,
         x: index - 5,
         right: index === 5,
         gpPin: 0,
-        level: 0.2,
+        level: 0,
         colorRaw: '255, 0, 208',
       })),
       {
         color: 'DeepPink',
       },
     ),
-    new Device(
-      'Asul',
+    new BeatClickerDevice(
+      'BC-3',
+      'Sonnenblume',
+      ArrayUtils.range(14).map((index) => ({
+        index,
+        x: index - 5,
+        right: index === 5,
+        gpPin: 0,
+        level: 0,
+        colorRaw: '255, 255, 255',
+      })),
+      {
+        color: 'white',
+      },
+    ),
+    new BeatClickerDevice(
+      'BC-4',
+      'Kornblume',
       ArrayUtils.range(8).map((index) => ({
         index,
         x: index - 4,
         right: index === 4,
         gpPin: 0,
-        level: 0.2,
         colorRaw: '0, 77, 208',
       })),
       {
@@ -110,6 +115,19 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
       },
     ),
   ];
+
+  reclickers: ReclickerDevice[] = ['Kornblume', 'Lilie', 'Lotus', 'Löwenzahn', 'Gänseblümchen'].map(
+    (name, index) =>
+      new ReclickerDevice(
+        ('RC-' + index) as IReclickerID,
+        name,
+        ArrayUtils.range(3).map((i) => ({
+          colorRaw: getRandomWarm(),
+          gpPin: 0,
+          index: i,
+        })),
+      ),
+  );
 
   // deep pink
 
@@ -142,6 +160,8 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
       widths: [5],
       directions: ['EW', 'EW', 'EW', 'EW', 'E', 'E', 'W', 'W'],
       spawnPos: [0, 0, 4, 0, 4, 0, 0, 4],
+      //directions: ['W'],
+      //spawnPos: [0],
     },
     out: {
       speeds: [5],
@@ -175,13 +195,24 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
     }
   }
 
+  init() {
+    const mapping: IReclickerLightMapping = {
+      'RC-0': new Int8Array([-7, -6, -5]),
+      'RC-1': new Int8Array([-4, -3, -2]),
+      'RC-2': new Int8Array([-1, 0, +1]),
+      'RC-3': new Int8Array([+2, +3, +4]),
+      'RC-4': new Int8Array([+5, +6, +7]),
+    };
+    this.reclickers.forEach((reclicker) => reclicker.assign(mapping));
+  }
+
   counterLoops = 0;
 
   recording: IRecording = null;
 
   private loop = () => {
     // 2. Perform your calculations
-    this.render();
+    this.animate();
 
     if (this.counterLoops++ % 200 === 0) {
       this.cleanup();
@@ -272,7 +303,18 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
 
     if (this.recording) {
       this.recording.waves.push(wave);
-      waveBg && this.recording.wavesBg.push(waveBg);
+      waveBg &&
+        this.recording.wavesBg.push({
+          wave,
+          keyFrames: [
+            { dt: 0, level: 0.22 },
+            { dt: 1, level: 0.22 },
+            { dt: 600, level: 0.22 },
+            { dt: 1_000, level: 0.2 },
+            { dt: 1_200, level: 0.1 },
+            { dt: 1_700, level: 0 },
+          ],
+        });
     }
 
     if (this.recording && this.recording.isPlaying) {
@@ -282,7 +324,7 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
     // console.log(this.waves);
   }
 
-  toLoopRun(device: Device, recording: IRecording): ILoopRun {
+  toLoopRun(device: BeatClickerDevice | ReclickerDevice, recording: IRecording): ILoopRun {
     const w0 = this.recording.waves[0];
     const t0 = w0.t0;
     const dtRecording = this.recording.t_end - t0;
@@ -291,8 +333,8 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
     const numLoops = Math.floor(dtTotal / dtRecording);
     const percentageTime = dtTotal / dtRecording - numLoops;
 
-    function mapTime(device: Device, time: number): number {
-      if (device.name === 'Lukas') {
+    function mapTime(device: BeatClickerDevice | ReclickerDevice, time: number): number {
+      if (device.lights.length > 10) {
         return time;
       }
       if (time < t0 + dtRecording / 2) {
@@ -316,7 +358,7 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
     };
   }
 
-  render() {
+  animate() {
     let globalLevel = 0;
     if (this.currentSignal) {
       const { t0, dt1_blink_1_start, dt2_blink_1_end, dt3_blink_2_start, dt4_blink_2_end } =
@@ -335,7 +377,8 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
     let waves = this.waves;
     let wavesBg = this.backgroundWaves;
 
-    this.devices.forEach((device) => {
+    const clickers = [...this.beatclickers, ...this.reclickers];
+    clickers.forEach((device) => {
       if (this.recording && this.recording.isPlaying && this.recording.waves.length) {
         const run = this.toLoopRun(device, this.recording);
         waves = run.waves;
@@ -351,6 +394,7 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
           return Math.max(current, _max);
         }, 0);
         light.level = Math.max(maxWaveValue, maxWaveBgValue);
+
         if (this.currentSignal) {
           light.level = globalLevel;
         }
@@ -362,7 +406,7 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
     const waves = this.waves.filter(
       (wave) =>
         Date.now() - wave.t0 < 1000 ||
-        this.devices.some((device) =>
+        this.beatclickers.some((device) =>
           device.lights.some((light) => {
             const { east, west } = this.intersectsWave(light, wave, Date.now());
             return east || west;
@@ -384,6 +428,9 @@ export class HeartbeatComponent implements OnInit, OnDestroy {
     let dtEast = dt;
     if (light.x < wave.spawnPos && hasEast) {
       dtEast = dt + 1 / wave.speed;
+    }
+    if (light.x >= wave.spawnPos && hasWest) {
+      xWest++;
     }
 
     const traveled = dt * wave.speed;

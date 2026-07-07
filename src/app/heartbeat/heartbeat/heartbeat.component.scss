@@ -1,11 +1,6 @@
 .container {
-  display: grid;
-  grid-template-rows: 1fr auto 1fr;
-
-  grid-template-areas:
-    'north north north'
-    'west  center east'
-    'south south south';
+  display: flex;
+  flex-direction: column;
 
   width: 100%;
   height: 100%;
@@ -15,33 +10,37 @@
   background-color: rgb(0, 0, 0);
 }
 
-.flex-container {
+.beatclicker-devices-container {
+  padding: 30px;
+}
+
+.beatclicker-device-container {
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  --border: 1px solid rgb(255, 255, 255);
+  border: 1px solid rgb(255, 255, 255);
 }
 
 /*
-.flex-container > div:nth-child(odd) {
+.beatclicker-device-container > div:nth-child(odd) {
   background-color: #d3d3d3;
 }
-.flex-container > div:nth-child(even) {
+.beatclicker-device-container > div:nth-child(even) {
   background-color: #a9a9a9;
 }
 */
 
-.flex-container > div {
+.beatclicker-device-container > div {
   color: white;
   position: relative;
-  border: 1px solid black;
+  border: 1px solid rgb(255, 0, 0);
   box-sizing: border-box;
   width: 35px;
 }
 
-.flex-container > div > .light {
-  --light-size: 200px;
+.beatclicker-device-container > div > .light {
+  --light-size: 100px;
 
   --light-color-raw: 255, 0, 208;
   --light-color: rgb(255, 0, 208);
@@ -49,7 +48,7 @@
   --light-color-white: rgb(255, 255, 255);
   --fade-profile: cubic-bezier(0.4, 0, 0.2, 1);
 
-  --light-level: 1;
+  --light-level: 0.5;
 
   position: absolute;
   top: calc(50% - (var(--light-size) / 2));
@@ -67,7 +66,7 @@
   );
 }
 
-.flex-container > button {
+.beatclicker-device-container > button {
   z-index: 1;
   cursor: pointer;
   width: 76px;
@@ -86,7 +85,7 @@
 }
 
 /* HOVER STATE: Gentle lighting lift */
-.flex-container > button:hover {
+.beatclicker-device-container > button:hover {
   background: linear-gradient(145deg, #353540, #222229);
   box-shadow:
     0 6px 15px rgba(0, 0, 0, 0.4),
@@ -94,7 +93,7 @@
 }
 
 /* ACTIVE STATE: Subtle click down */
-.flex-container > button:active {
+.beatclicker-device-container > button:active {
   transform: translateY(2px) scale(0.98);
   background: linear-gradient(145deg, #1e1e24, #1a1a1f);
   box-shadow:
