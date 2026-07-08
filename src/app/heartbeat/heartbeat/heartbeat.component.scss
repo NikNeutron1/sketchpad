@@ -19,24 +19,24 @@
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  border: 1px solid rgb(255, 255, 255);
+  border: 0px solid rgb(255, 255, 255);
 }
-
-/*
-.beatclicker-device-container > div:nth-child(odd) {
-  background-color: #d3d3d3;
-}
-.beatclicker-device-container > div:nth-child(even) {
-  background-color: #a9a9a9;
-}
-*/
 
 .beatclicker-device-container > div {
   color: white;
   position: relative;
-  border: 1px solid rgb(255, 0, 0);
   box-sizing: border-box;
-  width: 35px;
+}
+
+.light-box {
+  width: 7%;
+  height: 100px;
+  border: 0px solid green;
+}
+
+.light-box-satellite {
+  width: 90px;
+  border: 0px solid rgb(128, 0, 75);
 }
 
 .beatclicker-device-container > div > .light {
@@ -69,8 +69,8 @@
 .beatclicker-device-container > button {
   z-index: 1;
   cursor: pointer;
-  width: 76px;
-  height: 76px;
+  width: 36px;
+  height: 36px;
   border: none;
   outline: none;
   border-radius: 50%;

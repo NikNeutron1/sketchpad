@@ -1,22 +1,26 @@
 <div class="container">
   <div class="beatclicker-devices-container">
     <ng-container *ngFor="let device of beatclickers">
-      <div style="color: white">{{ device.name }} ({{ device.id }})</div>
+      <div style="color: white">
+        {{ labels.name ? device.name : '' }}
+        {{ labels.id ? (labels.name ? '(' + device.id + ')' : device.id) : '' }}
+      </div>
       <div class="beatclicker-device-container">
         <ng-container *ngFor="let light of device.lights">
           <button
             *ngIf="light.right"
-            (pointerdown)="handleMouseDown($event)"
-            (pointerup)="handleMouseUp($event)"
+            (pointerdown)="onButtonDown($event)"
+            (pointerup)="onButtonUp($event)"
           ></button>
-          <div>
+          <div class="light-box">
             <div
               class="light"
               [style.--light-level]="light.level"
               [style.--light-color-raw]="light.colorRaw"
             ></div>
-            {{ light.x }}
-            <!-- {{ light.index }} -->
+            {{ labels.x ? light.x : '' }}
+            {{ labels.index ? light.index : '' }}
+            {{ labels.gp ? light.gpPin : '' }}
           </div>
         </ng-container>
       </div>
@@ -32,28 +36,39 @@
       gap: 20px;
       margin: 50px;
       border-width: 0px;
+      flex-wrap: wrap;
     "
   >
     <div *ngFor="let device of reclickers">
-      <div class="beatclicker-device-container" style="border-width: 0px">
+      <div class="beatclicker-device-container">
         <ng-container *ngFor="let light of device.lights">
-          <div style="border-width: 0px">
+          <div class="light-box-satellite">
             <div
               class="light"
               [style.--light-level]="light.level"
               [style.--light-color-raw]="light.colorRaw"
+              [style.--light-size]="'100px'"
             ></div>
-            {{ light.index }}
+            {{ labels.x ? light.x : '' }}
+            {{ labels.index ? light.index : '' }}
+            {{ labels.gp ? light.gpPin : '' }}
           </div>
         </ng-container>
       </div>
 
-      <div style="width: 200px">{{ device.name }} ({{ device.id }})</div>
+      <div style="width: 200px">
+        {{ labels.name ? device.name : '' }}
+        {{ labels.id ? (labels.name ? '(' + device.id + ')' : device.id) : '' }}
+      </div>
     </div>
   </div>
 
   <div style="grid-area: south">
     <br />
-    <app-recording-graph [recording]="recording"></app-recording-graph>
+    <app-recording-graph
+      [lanes]="lanes"
+      [loopOn]="loopOn"
+      [recordingOn]="recordingOn"
+    ></app-recording-graph>
   </div>
 </div>

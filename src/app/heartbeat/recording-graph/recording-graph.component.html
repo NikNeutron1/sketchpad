@@ -1,40 +1,67 @@
 <div
-  #containerRecording
   style="
-    border: 1px solid white;
-    height: 100px;
-    margin-top: 100px;
+    border: 2px solid white;
     position: relative;
     width: 100%;
     box-sizing: border-box;
     overflow-x: hidden;
   "
-  *ngIf="recording"
+  *ngIf="lanes"
 >
-  <ng-container *ngFor="let waveSpike of waveSpikes">
-    <div
-      *ngIf="waveSpike.wave.direction.includes('E')"
-      class="wave-base wave-e"
-      [style.left]="waveSpike.timePercentage * 100 + '%'"
-    ></div>
-    <div
-      *ngIf="waveSpike.wave.direction.includes('W')"
-      class="wave-base wave-w"
-      [style.left]="waveSpike.timePercentage * 100 + '%'"
-    ></div>
-  </ng-container>
-
-  <div
-    style="position: absolute; top: 0px; height: 50px; border: 1px solid white"
-    [style.left]="getCurrenTimePercentage() * 100 + '%'"
-  ></div>
-
-  <div
-    style="position: absolute; top: 0px; height: 50px; border: 1px solid white"
-    [style.left]="getCurrenTimePercentage(2) * 100 + '%'"
-  ></div>
-
-  <div style="color: white; margin-top: 50px" *ngIf="recording && recording.isPlaying">
-    {{ getTime().now }} / {{ getTime().dtRecording }}
+  <div style="color: white; background-color: #444">
+    loopOn: {{ loopOn }}
+    <br />
+    pixelSize: {{ svgWidth }}
+    <br />
+    recording: {{ recordingOn }}
+    <ng-container *ngIf="loopOn">
+      <br />
+      {{ getTime().now }} / {{ getTime().dtRecording }}
+    </ng-container>
   </div>
+
+  <svg
+    height="100"
+    width="100%"
+    xmlns="http://www.w3.org/2000/svg"
+    style="border: 1px solid yellow; box-sizing: border-box"
+    #svg
+    *ngFor="let loop of [lanes.live, lanes.swap, lanes.busy]"
+  >
+    <defs>
+      <linearGradient id="tealFade" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#00ffcc" stop-opacity="1" />
+        <stop offset="100%" stop-color="#00ffcc" stop-opacity="0" />
+      </linearGradient>
+
+      <linearGradient id="pinkFade" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="rgb(255, 85, 213)" stop-opacity="0" />
+        <stop offset="100%" stop-color="rgb(255, 85, 213)" stop-opacity="1" />
+      </linearGradient>
+    </defs>
+
+    <ng-container *ngFor="let wave of loop.waves; trackBy: trackByWaveId">
+      <polygon
+        [attr.points]="getPointList(wave, loop).eastBg"
+        style="fill: rgb(104, 35, 87); z-index: 0"
+      ></polygon>
+      <polygon
+        [attr.points]="getPointList(wave, loop).westBg"
+        style="fill: #016450; z-index: 0"
+      ></polygon>
+      <polygon
+        [attr.points]="getPointList(wave, loop).east"
+        [style.fill]="isActive(wave, loop) ? 'rgb(255, 85, 213)' : 'url(#pinkFade)'"
+        style="z-index: 1"
+      ></polygon>
+      <polygon
+        [attr.points]="getPointList(wave, loop).west"
+        [style.fill]="isActive(wave, loop) ? '#00ffcc' : 'url(#tealFade)'"
+        style="z-index: 1"
+      ></polygon>
+    </ng-container>
+    <rect *ngIf="loopOn" width="2" height="70" [attr.x]="getPayheadPosition()" y="15" fill="blue" />
+  </svg>
+
+  <!-- stroke: rgb(255, 5, 255); stroke-width: 0 -->
 </div>

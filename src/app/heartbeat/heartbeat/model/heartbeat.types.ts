@@ -1,18 +1,16 @@
 import { IHexColor } from 'src/app/sketchpad/model/types';
 
-export interface IWave {
+export type IWave = {
   t0: number; // miliseconds
   speed: number; // light per second
   spawnPos: number;
   width: number; // lights
   brigthness: number;
   direction: 'E' | 'W' | 'EW';
-}
+  bgKeyFrames: IBgKeyFrame[];
+};
 
-export interface IBackgroundWave {
-  wave: IWave;
-  keyFrames: Array<{ dt: number; level: number }>;
-}
+export type IBgKeyFrame = { dt: number; level: number };
 
 export interface ILight {
   index: number;
@@ -25,16 +23,10 @@ export interface ILight {
   level?: number; // 0 bis 1
 }
 
-export interface IRecording {
-  t_end: number;
-  waves: IWave[];
-  wavesBg: IBackgroundWave[];
-  isPlaying: boolean;
-}
+export type IRecording = ILoopRun;
 
 export type ILoopRun = {
   waves: IWave[];
-  wavesBg: IBackgroundWave[];
 };
 
 export interface ISignalRyhtm {
@@ -48,6 +40,7 @@ export interface ISignalRyhtm {
 type IDeviceOptions = { color: string } | { colors: string[] };
 
 export class BeatClickerDevice {
+  public readonly type = 'BeatClicker';
   constructor(
     public readonly id: string,
     public name: string,
@@ -72,6 +65,7 @@ export type IReclickerLightMapping = {
 const orange: IHexColor = '#ff8800' as IHexColor;
 
 export class ReclickerDevice {
+  public readonly type = 'Reclicker';
   constructor(
     public readonly id: IReclickerID,
     public name: string,
