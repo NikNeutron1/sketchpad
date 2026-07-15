@@ -61,14 +61,14 @@
   color: white;
 }
 
-.oneliner input[type="checkbox"] {
+.oneliner input[type='checkbox'] {
   width: 20px;
   height: 20px;
   margin-left: 10px;
 }
 
-.oneliner input[type="text"],
-.oneliner input[type="number"] {
+.oneliner input[type='text'],
+.oneliner input[type='number'] {
   font-size: 14px;
   padding: 5px;
   border: 1px solid #cccccc;
@@ -78,7 +78,7 @@
   transition: border-color 0.3s;
 }
 
-.oneliner input[type="text"]:focus {
+.oneliner input[type='text']:focus {
   border-color: #007bff; /* Blue border on focus */
   outline: none; /* Removes default outline */
 }
@@ -120,9 +120,9 @@
 // }
 
 .prettySelect,
-.prettyInput[type="text"],
-.prettyInput[type="number"],
-.prettyInput[type="button"] {
+.prettyInput[type='text'],
+.prettyInput[type='number'],
+.prettyInput[type='button'] {
   font-size: 14px;
   padding: 5px;
   border: 1px solid var(--button-border-color);
@@ -142,7 +142,7 @@ button.prettyInput {
   align-items: center;
 }
 
-.prettyInput[type="button"]:hover,
+.prettyInput[type='button']:hover,
 button.prettyInput:hover {
   border-color: var(--button-border-color-hovered);
   outline: none;
@@ -158,14 +158,14 @@ select.prettyInput {
   transition: border-color 0.3s;
 }
 
-.prettyInput[type="checkbox"] {
+.prettyInput[type='checkbox'] {
   width: 20px;
   height: 20px;
   // margin-left: 10px;
 }
 
 .prettySelect,
-.prettyInput[type="text"]:focus .prettyInput[type="button"]:focus {
+.prettyInput[type='text']:focus .prettyInput[type='button']:focus {
   border-color: var(--button-border-color-hovered);
   outline: none;
 }
